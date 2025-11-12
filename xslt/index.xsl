@@ -29,10 +29,36 @@
             <body class="d-flex flex-column h-100">
                 <xsl:call-template name="nav_bar"/>
                 <main class="flex-shrink-0 flex-grow-1">
-                    <div class="container">
+                    <div class="container col-xxl-8 pt-3">
                         <xsl:call-template name="one_time_alert"/>
-                        <h1><xsl:value-of select="$project_short_title"/></h1>
-                        <h2><xsl:value-of select="$project_title"/></h2>
+                        <div class="row flex-lg-row align-items-center g-5 py-5">
+                            <div class="col-lg-6">
+                                <h1 class="lh-base">
+                                    <span class="display-4">Karl Kraus</span>
+                                    <br/>
+                                    <span class="display-6">Bibliographie</span>
+                                </h1>
+                                <p class="text-end">basierend auf S.P. Scheichl's "Kommentierte Auswahlbibliographie" (KAB)</p>
+                                <p class="lead">Herausgegeben von Bernhard Oberreither und dem Austrian Centre for Digital Humanities <a href="https://www.oeaw.ac.at/acdh/">(ACDH)</a>
+                                </p>
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                                    <a href="about.html" type="button"
+                                        class="btn btn-outline-primary btn-lg px-4 me-md-2"
+                                        >Über das Projekt</a>
+                                    <a href="listbibl.html" type="button"
+                                        class="btn btn-outline-primary btn-lg px-4">Alle Einträge</a>
+                                </div>
+                            </div>
+                            <div class="col-10 col-sm-8 col-lg-6">
+                                <figure class="figure">
+                                    <img src="images/title-image.jpg"
+                                        class="d-block mx-lg-auto img-fluid"
+                                        alt=" Lajos Tihanyi, Porträt Karl Kraus 1925" width="400" height="600"
+                                        loading="lazy"/>
+                                    <figcaption class="pt-3 figure-caption">Lajos Tihanyi, Porträt Karl Kraus 1925, Public domain, via <a href="">Wikimedia Commons</a></figcaption>
+                                </figure>
+                            </div>
+                        </div>
                         <div class="text-center p-4">
                             <xsl:call-template name="blockquote"/>
                         </div>

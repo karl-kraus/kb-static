@@ -10,7 +10,8 @@ listbibl_file = os.path.join("data", "indices", "listbibl.xml")
 doc = TeiReader(listbibl_file)
 categories = {}
 for x in doc.any_xpath(".//tei:body/tei:desc[@corresp]"):
-    categories[x.attrib["corresp"]] = x.text
+    for y in x.attrib["corresp"].split():
+        categories[f"{y}"] = x.text
 
 for bad in doc.any_xpath(".//tei:note[@type='category']"):
     bad.getparent().remove(bad)
