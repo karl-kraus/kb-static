@@ -72,7 +72,9 @@ for x in tqdm(doc.any_xpath(".//tei:bibl[@xml:id]")):
     record["id"] = xml_id
     record["rec_id"] = xml_id
     record["title"] = x.xpath(".//tei:title[1]", namespaces=namespaces)[0].text
-    record["full_text"] = extract_fulltext(x, tag_blacklist=tag_blacklist)
+    f_text = extract_fulltext(x, tag_blacklist=tag_blacklist)
+    f_title = x.attrib["n"]
+    record["full_text"] = f"{f_title} {f_text}"
 
     record["person_entities"] = []
     for y in x.xpath("./tei:author[@key]", namespaces=namespaces):
