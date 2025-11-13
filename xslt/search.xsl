@@ -71,6 +71,7 @@
                                                 <i class="bi bi-tags"/> Entitäten </h3>
                                             <div id="rf-persons" class="pb-3"/>
                                             <div id="rf-places" class="pb-3"/>
+                                            <div id="rf-categories" class="pb-3"/>
                                         </div>
                                     </div>
                                     <!-- Sortierung Section -->

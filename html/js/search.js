@@ -153,6 +153,24 @@ search.addWidgets([
     cssClasses: DEFAULT_CSS_CLASSES,
   }),
 
+  instantsearch.widgets.panel({
+    collapsed: ({ state }) => {
+      return state.query.length === 0;
+    },
+    templates: {
+      header: "Kategorie",
+    },
+  })(instantsearch.widgets.refinementList)({
+    container: "#rf-categories",
+    attribute: "category_entities",
+    searchable: true,
+    showMore: true,
+    showMoreLimit: 50,
+    limit: 10,
+    searchablePlaceholder: "Suche nach Kategorien",
+    cssClasses: DEFAULT_CSS_CLASSES,
+  }),
+
   instantsearch.widgets.pagination({
     container: "#pagination",
     padding: 2,
