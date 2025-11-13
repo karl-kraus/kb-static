@@ -1,18 +1,17 @@
-import glob
 import os
 
 import typesense
 from acdh_tei_pyutils.tei import TeiReader
 from acdh_tei_pyutils.utils import (
+    check_for_hash,
     extract_fulltext,
     get_xmlid,
-    make_entity_label,
 )
 from tqdm import tqdm
 from typesense.exceptions import ObjectNotFound
+from utils import listbibl_file
 
 COLLECTION_NAME = "kb-static"
-files = glob.glob("./data/editions/*.xml")
 tag_blacklist = [
     "{http://www.tei-c.org/ns/1.0}abbr",
     "{http://www.tei-c.org/ns/1.0}del",
@@ -59,60 +58,40 @@ current_schema = {
 
 client.collections.create(current_schema)
 
-
+doc = TeiReader(listbibl_file)
 records = []
 cfts_records = []
-for x in tqdm(files, total=len(files)):
-    doc = TeiReader(x)
+for x in tqdm(doc.any_xpath(".//tei:bibl[@xml:id]")):
+    xml_id = get_xmlid(x)
     try:
-        body = doc.any_xpath(".//tei:body")[0]
+        body = x.xpath("./tei:note[@type='comment']", namespaces=namespaces)[0]
     except IndexError:
-        continue
+        body = "Kein Kommentar"
+        print(xml_id)
     record = {}
-    record["id"] = os.path.split(x)[-1].replace(".xml", "")
-    record["rec_id"] = os.path.split(x)[-1].replace(".xml", "")
-    record["title"] = doc.any_xpath(".//tei:titleStmt/tei:title[1]")[0].text
-    record["full_text"] = extract_fulltext(body, tag_blacklist=tag_blacklist)
+    record["id"] = xml_id
+    record["rec_id"] = xml_id
+    record["title"] = x.xpath(".//tei:title[1]", namespaces=namespaces)[0].text
+    record["full_text"] = extract_fulltext(x, tag_blacklist=tag_blacklist)
 
     record["person_entities"] = []
-    for y in doc.any_xpath(".//tei:back//tei:listPerson/tei:person[@xml:id]"):
+    for y in x.xpath("./tei:author[@key]", namespaces=namespaces):
         item = {}
-        item["id"] = get_xmlid(y)
-        item["label"] = make_entity_label(
-            y.xpath("./tei:persName[1]", namespaces=namespaces)[0]
-        )
+        item["id"] = check_for_hash(y.attrib["key"])
+        item["label"] = y.text
         record["person_entities"].append(item)
 
     record["place_entities"] = []
-    for y in doc.any_xpath(".//tei:back//tei:listPlace/tei:place[@xml:id]"):
+    for y in x.xpath("./tei:pubPlace[@key]", namespaces=namespaces):
         item = {}
-        item["id"] = get_xmlid(y)
-        item["label"] = make_entity_label(
-            y.xpath("./tei:placeName[1]", namespaces=namespaces)[0]
-        )
+        item["id"] = check_for_hash(y.attrib["key"])
+        item["label"] = y.text
         record["place_entities"].append(item)
-
-    record["org_entities"] = []
-    for y in doc.any_xpath(".//tei:back//tei:listOrg/tei:org[@xml:id]"):
-        item = {}
-        item["id"] = get_xmlid(y)
-        item["label"] = make_entity_label(
-            y.xpath("./tei:orgName[1]", namespaces=namespaces)[0]
-        )
-        record["org_entities"].append(item)
-
-    record["bibl_entities"] = []
-    for y in doc.any_xpath(".//tei:back//tei:listBibl/tei:bibl[@xml:id]"):
-        item = {}
-        item["id"] = get_xmlid(y)
-        item["label"] = extract_fulltext(
-            y.xpath("./tei:title", namespaces=namespaces)[0]
-        )
-        record["bibl_entities"].append(item)
+    record["category_entities"] = x.xpath(
+        "./tei:note[@type='category']", namespaces=namespaces
+    )[0].text
 
     records.append(record)
-    print(record)
-
 
 make_index = client.collections[COLLECTION_NAME].documents.import_(records)
 print(make_index)

@@ -1,6 +1,6 @@
 const indexName = "kb-static";
 
-const apiKey = "0drlT8CHD6T9z8QxQjYXvSWT2dZ75nPv"; /* change this */
+const apiKey = "UDSqLOOrchTQcUv1RtS9u803qDpiGBDz"; /* change this */
 
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   server: {
@@ -35,6 +35,10 @@ const searchClient = typesenseInstantsearchAdapter.searchClient;
 const search = instantsearch({
   indexName: indexName,
   searchClient,
+  routing: {
+    router: instantsearch.routers.history(),
+    stateMapping: instantsearch.stateMappings.simple(),
+  },
 });
 
 search.addWidgets([
@@ -66,13 +70,6 @@ search.addWidgets([
               ? components.Snippet({ hit, attribute: "full_text" })
               : ""}
           </p>
-          ${hit.place_entities.map(
-            (item) =>
-              html`<a href="${item.id}.html" class="pe-2 custom-link"
-                ><i class="bi bi-geo-alt pe-1"></i>${item.label}</a
-              >`
-          )}
-          <br />
           ${hit.person_entities.map(
             (item) =>
               html`<a href="${item.id}.html" class="pe-2 custom-link"
@@ -80,13 +77,12 @@ search.addWidgets([
               >`
           )}
           <br />
-          ${hit.bibl_entities.map(
+          ${hit.place_entities.map(
             (item) =>
               html`<a href="${item.id}.html" class="pe-2 custom-link"
-                ><i class="bi bi-book pe-1"></i>${item.label}</a
+                ><i class="bi bi-geo-alt pe-1"></i>${item.label}</a
               >`
           )}
-          <br />
         </div>`;
       },
     },
@@ -154,24 +150,6 @@ search.addWidgets([
     showMoreLimit: 50,
     limit: 10,
     searchablePlaceholder: "Suche nach Orten",
-    cssClasses: DEFAULT_CSS_CLASSES,
-  }),
-
-  instantsearch.widgets.panel({
-    collapsed: ({ state }) => {
-      return state.query.length === 0;
-    },
-    templates: {
-      header: "Literatur",
-    },
-  })(instantsearch.widgets.refinementList)({
-    container: "#rf-works",
-    attribute: "bibl_entities.label",
-    searchable: true,
-    showMore: true,
-    showMoreLimit: 50,
-    limit: 10,
-    searchablePlaceholder: "Suche nach Literatur",
     cssClasses: DEFAULT_CSS_CLASSES,
   }),
 
