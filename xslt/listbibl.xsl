@@ -16,7 +16,7 @@
 
     <xsl:template match="/">
         <xsl:variable name="doc_title">
-            <xsl:value-of select=".//tei:titleStmt/tei:title[1]/text()"/>
+            <xsl:value-of select=".//tei:titleStmt/tei:title[@level='a']/text()"/>
         </xsl:variable>
         <xsl:variable name="link" select="'listbibl.html'"/>
         <html class="h-100" lang="{$default_lang}">
@@ -107,7 +107,8 @@
         </html>
         <xsl:for-each select=".//tei:bibl[@xml:id]">
             <xsl:variable name="filename" select="concat(./@xml:id, '.html')"/>
-            <xsl:variable name="name" select="normalize-space(string-join(./tei:title[1]//text()))"></xsl:variable>
+            <xsl:variable name="xmlName" select="'bibl/'||./@xml:id||'.xml'"/>
+            <xsl:variable name="name" select="@n"></xsl:variable>
             <xsl:result-document href="{$filename}">
                 <html class="h-100" lang="{$default_lang}">
                     <head>
@@ -134,9 +135,42 @@
                                 </ol>
                             </nav>
                             <div class="container">
-                                <h1>
-                                    <xsl:value-of select="$name"/>
-                                </h1>
+                                <div class="row">
+                                    <div class="col-md-2 col-lg-2 col-sm-12 text-start">
+                                        <a>
+                                            <xsl:attribute name="href">
+                                                <xsl:value-of select="./@prev||'.html'"/>
+                                            </xsl:attribute>
+                                            <i class="fs-2 bi bi-chevron-left" title="Zurück zum vorigen Dokument" visually-hidden="true">
+                                                <span class="visually-hidden">Zurück zum vorigen Dokument</span>
+                                            </i>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-8 col-lg-8 col-sm-12 text-center">
+                                        <h1 class="text-center">
+                                            <xsl:value-of select="$name"/>
+                                        </h1>
+                                        <div>
+                                            <a href="{$xmlName}">
+                                                <i class="bi bi-download fs-2" title="Zum TEI/XML Dokument" visually-hidden="true">
+                                                    <span class="visually-hidden">Zum TEI/XML Dokument</span>
+                                                </i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-lg-2 col-sm-12 text-end">
+                                        
+                                            <a>
+                                                <xsl:attribute name="href">
+                                                    <xsl:value-of select="./@next||'.html'"/>
+                                                </xsl:attribute>
+                                                <i class="fs-2 bi bi-chevron-right" title="Weiter zum nächsten Dokument" visually-hidden="true">
+                                                    <span class="visually-hidden">Weiter zum nächsten Dokument</span>
+                                                </i>
+                                            </a>
+                                    </div>
+                                </div>
+                                
                                 <xsl:call-template name="bibl_detail"/>
                                 <div class="text-center p-4">
                                 <xsl:call-template name="blockquote">
