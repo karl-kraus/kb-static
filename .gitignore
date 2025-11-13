@@ -1,6 +1,7 @@
 # project specific
 secret.*
 *.html
+html/bibl/
 html/*.xml
 html/beacon.txt
 /html/oai-pmh

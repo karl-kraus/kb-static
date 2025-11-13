@@ -1,12 +1,10 @@
-import os
-
 import lxml.etree as ET
 from acdh_tei_pyutils.tei import TeiReader
 from acdh_xml_pyutils.xml import NSMAP
-from utils import generate_quote
+from utils import generate_quote, listbibl_file
 
 print("adding categories")
-listbibl_file = os.path.join("data", "indices", "listbibl.xml")
+
 doc = TeiReader(listbibl_file)
 categories = {}
 for x in doc.any_xpath(".//tei:body/tei:desc[@corresp]"):
@@ -16,8 +14,8 @@ for x in doc.any_xpath(".//tei:body/tei:desc[@corresp]"):
 for bad in doc.any_xpath(".//tei:note[@type='category']"):
     bad.getparent().remove(bad)
 
-for bad in doc.any_xpath(".//tei:bibl[@xml:id and @n]/@n"):
-    bad.getparent().remove(bad)
+for bad in doc.any_xpath(".//tei:bibl[@xml:id and @n]"):
+    del bad.attrib["n"]
 
 for x in doc.any_xpath(".//tei:bibl[@xml:id]"):
     quote = generate_quote(x)

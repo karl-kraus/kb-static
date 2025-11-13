@@ -1,9 +1,37 @@
+import os
+
 from acdh_xml_pyutils.xml import NSMAP
 from lxml import etree as ET
 
+listbibl_file = os.path.join("data", "indices", "listbibl.xml")
+
+dummy_entry = """
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:id="listperson.xml">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title level="a"></title>
+                <title level="s">Eine Karl Kraus Bibliographie, basierend auf S.P. Scheichls "Kommentierte Auswahlbibliographie" (KAB)</title>
+                <editor ref="https://d-nb.info/gnd/1036708799">Bernhard Oberreither</editor>
+            </titleStmt>
+            <publicationStmt>
+                <p>Publication Information</p>
+            </publicationStmt>
+            <sourceDesc>
+                <p>Information about the source</p>
+            </sourceDesc>
+        </fileDesc>
+    </teiHeader>
+    <text>
+        <body>
+            <listBibl/>
+        </body>
+    </text>
+</TEI>
+"""  # noqa E501
+
+
 # this function was written by Claude Sonnet 4.5 because no sane person would do this
-
-
 def generate_quote(bibl: ET.Element) -> str:
     """Generate a full bibliographic citation from a TEI bibl element.
 
