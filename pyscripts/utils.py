@@ -4,6 +4,8 @@ from acdh_xml_pyutils.xml import NSMAP
 from lxml import etree as ET
 
 listbibl_file = os.path.join("data", "indices", "listbibl.xml")
+listperson_file = os.path.join("data", "indices", "listperson.xml")
+listplace_file = os.path.join("data", "indices", "listplace.xml")
 
 dummy_entry = """
 <TEI xmlns="http://www.tei-c.org/ns/1.0" xml:id="listperson.xml">
