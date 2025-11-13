@@ -48,18 +48,19 @@
                         </ol>
                     </nav>                 
                     <div class="container">                        
-                        <h1>
-                            <xsl:value-of select="$doc_title"/>
-                        </h1>
+                        <h1 class="display-5 text-center"><xsl:value-of select="$doc_title"/></h1>
+                        <div class="text-center p-1"><span id="counter1"></span> von <span id="counter2"></span> Beiträge</div>
                         
                         <table id="myTable">
                             <thead>
                                 <tr>
-                                    <th scope="col" width="20" tabulator-formatter="html" tabulator-headerSort="false" tabulator-download="false">#</th>
-                                    <th scope="col" tabulator-headerFilter="input">Titel</th>
-                                    <th scope="col" tabulator-headerFilter="input">Autor</th>
+                                    <th scope="col" tabulator-headerFilter="input" tabulator-formatter="html" tabulator-download="false" tabulator-minWidth="350">Titel</th>
+                                    <th scope="col" tabulator-visible="false" tabulator-download="true">titel_</th>
+                                    <th scope="col" tabulator-headerFilter="input" tabulator-formatter="text">Autor</th>
                                     <th scope="col" tabulator-headerFilter="input">Datum</th>
-                                    <th scope="col" tabulator-headerFilter="input">ID</th>
+                                    <th scope="col" tabulator-headerFilter="input">Ort</th>
+                                    <th scope="col" tabulator-headerFilter="input">Kategorie</th>
+                                    <th scope="col" tabulator-visible="false" tabulator-headerFilter="input">ID</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -67,24 +68,34 @@
                                     <xsl:variable name="id">
                                         <xsl:value-of select="data(@xml:id)"/>
                                     </xsl:variable>
+                                    <xsl:variable name="label">
+                                        <xsl:value-of select="./tei:title[1]"/>
+                                    </xsl:variable>
                                     <tr>
                                         <td>
                                             <a>
-                                              <xsl:attribute name="href">
-                                              <xsl:value-of select="concat($id, '.html')"/>
-                                              </xsl:attribute>
-                                              <i class="bi bi-link-45deg"/>
+                                                <xsl:attribute name="href">
+                                                    <xsl:value-of select="concat($id, '.html')"/>
+                                                </xsl:attribute>
+                                                <xsl:value-of select="$label"/>
                                             </a>
                                         </td>
                                         <td>
-                                            <xsl:value-of select=".//tei:title[1]/text()"/>
+                                            <xsl:value-of select="$label"/>
                                         </td>
                                         <td>
-                                            <xsl:value-of select=".//tei:author[1]//text()"/>
+                                            <xsl:value-of select="./tei:author/text()"/>
                                         </td>
                                         <td>
-                                            <xsl:value-of select=".//tei:date[1]/text()"/>
+                                            <xsl:value-of select="./tei:date/text()"/>
                                         </td>
+                                        <td>
+                                            <xsl:value-of select="./tei:pubPlace/text()"/>
+                                        </td>
+                                        <td>
+                                            <xsl:value-of select="./tei:note[@type='category']/text()"/>
+                                        </td>
+                                        
                                         <td>
                                             <xsl:value-of select="$id"/>
                                         </td>
@@ -93,7 +104,7 @@
                             </tbody>
                         </table>
                         <xsl:call-template name="tabulator_dl_buttons"/>
-
+                        
                         <div class="text-center p-4">
                             <xsl:call-template name="blockquote">
                                 <xsl:with-param name="pageId" select="'listbibl.html'"/>
