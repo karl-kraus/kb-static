@@ -55,6 +55,7 @@
                                 <tr>
                                     <th scope="col" tabulator-headerFilter="input" tabulator-formatter="html" tabulator-download="false" tabulator-minWidth="350">Name</th>
                                     <th scope="col" tabulator-visible="false" tabulator-download="true">name_</th>
+                                    <th scope="col" tabulator-download="true" tabulator-headerFilter="number">Werke</th>
                                     <th scope="col" tabulator-visible="false" tabulator-headerFilter="input">ID</th>
                                 </tr>
                             </thead>
@@ -77,6 +78,15 @@
                                         </td>
                                         <td>
                                             <xsl:value-of select="$label"/>
+                                        </td>
+                                        <td>
+                                            <xsl:choose>
+                                                <xsl:when test="./tei:listBibl/@n">
+                                                    <xsl:value-of select="./tei:listBibl/@n"/>
+                                                </xsl:when>
+                                                <xsl:otherwise>0</xsl:otherwise>
+                                            </xsl:choose>
+                                            
                                         </td>
                                         <td>
                                             <xsl:value-of select="$id"/>

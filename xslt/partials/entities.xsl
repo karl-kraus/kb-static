@@ -163,15 +163,15 @@
                     </dd>
                 </xsl:for-each>
             </xsl:if>
-            <xsl:if test="./tei:noteGrp/tei:note[@type = 'mentions']">
-                <dt>Erwähnt in</dt>
-                <dd>
-                    <xsl:for-each select="./tei:noteGrp/tei:note[@type = 'mentions']">
-                        <a href="{replace(@target, '.xml', '.html')}">
-                            <xsl:value-of select="./text()"/>
-                        </a>
-                    </xsl:for-each>
-                </dd>
+            <xsl:if test="./tei:listBibl/tei:bibl">
+                <dt>Autor*in von Werken</dt>
+                <xsl:for-each select="./tei:listBibl/tei:bibl[@corresp]">
+                    <dd>
+                        <a href="{replace(@corresp, '#', '')||'.html'}">
+                        <xsl:value-of select="./@n"/>
+                    </a>
+                    </dd>
+                </xsl:for-each>
             </xsl:if>
         </dl>
     </xsl:template>
