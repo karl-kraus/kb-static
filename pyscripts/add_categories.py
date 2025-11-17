@@ -1,5 +1,6 @@
 import lxml.etree as ET
 from acdh_tei_pyutils.tei import TeiReader
+from acdh_tei_pyutils.utils import get_xmlid
 from acdh_xml_pyutils.xml import NSMAP
 from utils import generate_quote, listbibl_file
 
@@ -20,7 +21,10 @@ for bad in doc.any_xpath(".//tei:bibl[@xml:id and @n]"):
 for x in doc.any_xpath(".//tei:bibl[@xml:id]"):
     quote = generate_quote(x)
     x.attrib["n"] = quote
-    cat_id = x.xpath("./tei:num[@type='category']", namespaces=NSMAP)[0].text
+    try:
+        cat_id = x.xpath("./tei:num[@type='category']", namespaces=NSMAP)[0].text
+    except IndexError:
+        print(f"num[@type='category'] missing for {get_xmlid(x)}")
     try:
         cat_text = categories[cat_id]
     except KeyError:
