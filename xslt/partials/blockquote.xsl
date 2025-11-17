@@ -7,13 +7,14 @@
         <xsl:param name="pageId" select="''"></xsl:param>
         <xsl:param name="customUrl" select="$base_url"></xsl:param>
         <xsl:variable name="fullUrl" select="concat($customUrl, $pageId)"/>
-        <div>
-            <h2 class="fs-4">How to cite</h2>
-            <blockquote class="blockquote">
-                <p>
-                    <xsl:value-of select="$project_title"/>, herausgegeben von Bernhard Oberreither und dem Austrian Centre for Digital Humanities (ACDH), Wien 2025 (<a href="{$fullUrl}"><xsl:value-of select="$fullUrl"/></a>)
-                </p>
-            </blockquote>
-        </div>
+        <div class="mt-5">
+                  <span class="fs-5 fw-bold">How to cite:</span>
+                  <span class="fs-5">
+                     Digitale Karl-Kraus-Bibliographie. Basierend auf Sigurd Paul Scheichls
+                      Kommentierter Auswahlbibliographie zu Karl Kraus. Hrsg. v. Bernhard 
+                      Oberreither und Peter Andorfer. ACDH. Wien 2025. URL: 
+                      <a href="https://karl-kraus.github.io/kb-static/">https://karl-kraus.github.io/kb-static/</a>[entry or sub-page].html
+                  </span>
+               </div>
     </xsl:template>
 </xsl:stylesheet>
