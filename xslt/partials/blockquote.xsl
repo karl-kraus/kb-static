@@ -13,7 +13,7 @@
                      Digitale Karl-Kraus-Bibliographie. Basierend auf Sigurd Paul Scheichls
                       Kommentierter Auswahlbibliographie zu Karl Kraus. Hrsg. v. Bernhard 
                       Oberreither und Peter Andorfer. ACDH. Wien 2025. URL: 
-                      <a href="https://karl-kraus.github.io/kb-static/">https://karl-kraus.github.io/kb-static/</a>[entry or sub-page].html
+                      <a href="{$fullUrl}"><xsl:value-of select="$fullUrl"/></a>
                   </span>
                </div>
     </xsl:template>
