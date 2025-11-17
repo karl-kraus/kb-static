@@ -37,7 +37,7 @@
                               <p class="text-end lead fs-4">Basierend auf Sigurd Paul Scheichls 
                                   <br/>
                                   <span class="fst-italic">Kommentierter Auswahlbibliographie zu Karl Kraus</span>
-                                  <br/>–&nbsp;KAB (1975ff.)
+                                  <br/>– KAB (1975ff.)
                               </p>
                               <p class="lead">Herausgegeben von Bernhard Oberreither und Peter Andorfer</p>
                               <div class="d-grid gap-2 d-md-flex justify-content-md-start">
