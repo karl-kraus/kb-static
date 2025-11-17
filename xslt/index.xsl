@@ -33,22 +33,18 @@
                         <xsl:call-template name="one_time_alert"/>
                         <div class="row flex-lg-row align-items-center g-5 py-5">
                             <div class="col-lg-6">
-                                <h1 class="lh-base">
-                                    <span class="display-4">Karl Kraus</span>
-                                    <br/>
-                                    <span class="display-6">Bibliographie</span>
-                                </h1>
-                                <p class="text-end">basierend auf S.P. Scheichl's "Kommentierte Auswahlbibliographie" (KAB)</p>
-                                <p class="lead">Herausgegeben von Bernhard Oberreither und dem Austrian Centre for Digital Humanities <a href="https://www.oeaw.ac.at/acdh/">(ACDH)</a>
-                                </p>
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                                    <a href="about.html" type="button"
-                                        class="btn btn-outline-primary btn-lg px-4 me-md-2"
-                                        >Über das Projekt</a>
-                                    <a href="listbibl.html" type="button"
-                                        class="btn btn-outline-primary btn-lg px-4">Alle Einträge</a>
-                                </div>
-                            </div>
+                              <h1 class="lh-base"><span class="display-4">Digitale Karl-Kraus-Bibliographie</span></h1>
+                              <p class="text-end lead fs-4">Basierend auf Sigurd Paul Scheichls 
+                                  <br/>
+                                  <span class="fst-italic">Kommentierter Auswahlbibliographie zu Karl Kraus</span>
+                                  <br/>–&nbsp;KAB (1975ff.)
+                              </p>
+                              <p class="lead">Herausgegeben von Bernhard Oberreither und Peter Andorfer</p>
+                              <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                                  <a href="about.html" type="button" class="btn btn-outline-primary btn-lg px-4 me-md-2">Über das Projekt</a>
+                                  <a href="listbibl.html" type="button" class="btn btn-outline-primary btn-lg px-4">Alle Einträge</a>
+                              </div>
+                           </div>
                             <div class="col-10 col-sm-8 col-lg-6">
                                 <figure class="figure">
                                     <img src="images/title-image.jpg"
