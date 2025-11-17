@@ -34,11 +34,8 @@
                         <div class="row flex-lg-row align-items-center g-5 py-5">
                             <div class="col-lg-6">
                                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                    <strong>Anmerkung:</strong> Diese Seite ist work-in-progress und wird laufend aktualisiert und korrigiert. Hinweise gerne an
-                                    <a href="mailto:bernhard.oberreither@oeaw.ac.at">bernhard.oberreither@oeaw.ac.at</a>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&#215;</span>
-                                    </button>
+                                    <strong>Anmerkung:</strong> Diese Seite ist work-in-progress und wird laufend aktualisiert und korrigiert. Hinweise gerne an: 
+                                    <a href="mailto:bernhard.oberreither@oeaw.ac.at">bernhard.oberreither@oeaw.ac.at</a>.
                                 </div>
                               <h1 class="lh-base"><span class="display-4">Digitale Karl-Kraus-Bibliographie</span></h1>
                               <p class="text-end lead fs-4">Basierend auf Sigurd Paul Scheichls 
