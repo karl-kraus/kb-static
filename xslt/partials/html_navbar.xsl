@@ -28,7 +28,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="listbibl.html">Bibliographie</a>
+                                <a class="nav-link" href="bibliographie.html">Bibliographie</a>
                             </li>
 
                             <li class="nav-item dropdown disabled">
@@ -39,6 +39,9 @@
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href="listplace.html">Orte</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="listbibl.html">Bibliographie</a>
                                     </li>
                                 </ul>
                             </li>
