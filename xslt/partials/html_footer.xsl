@@ -6,7 +6,7 @@
     exclude-result-prefixes="#all"
     version="2.0">
     <xsl:template name="html_footer">
-        <footer class="footer mt-auto py-3">
+        <footer class="footer mt-auto py-3 bg-body-tertiary">
             <div class="container-fluid pt-2">
                 <div class="row justify-content-center">
                     <div class="col-lg-1 col-md-2 col-sm-2 col-xs-6 text-center">
