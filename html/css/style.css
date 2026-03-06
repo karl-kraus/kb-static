@@ -13,6 +13,10 @@ dd {
   margin-left: 1.5rem;
 }
 
+.all-caps {
+  font-variant: small-caps;
+}
+
 .entity {
   text-decoration: underline dotted;
   cursor: pointer;
