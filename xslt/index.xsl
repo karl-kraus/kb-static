@@ -37,7 +37,7 @@
                                     <strong>Anmerkung:</strong> Diese Seite ist work-in-progress und wird laufend aktualisiert und korrigiert. Hinweise gerne an: 
                                     <a href="mailto:bernhard.oberreither@oeaw.ac.at">bernhard.oberreither@oeaw.ac.at</a>.
                                 </div>
-                              <h1 class="lh-base"><span class="display-4">Digitale Karl-Kraus-Bibliographie</span></h1>
+                              <h1 class="lh-base"><span class="all-caps display-4">Digitale Karl-Kraus-Bibliographie</span></h1>
                               <p class="lead fs-4">Basierend auf Sigurd Paul Scheichls 
                                   <br/>
                                   <span class="fst-italic">Kommentierter Auswahlbibliographie zu Karl Kraus</span>
@@ -49,7 +49,7 @@
                                   <a href="listbibl.html" type="button" class="btn btn-outline-primary btn-lg px-4">Alle Einträge</a>
                               </div>
                            </div>
-                            <div class="col-10 col-sm-8 col-lg-6">
+                            <!--<div class="col-10 col-sm-8 col-lg-6">
                                 <figure class="figure">
                                     <img src="images/title-image.jpg"
                                         class="d-block mx-lg-auto img-fluid"
@@ -57,7 +57,7 @@
                                         loading="lazy"/>
                                     <figcaption class="pt-3 figure-caption">Lajos Tihanyi, Porträt Karl Kraus 1925, Public domain, via <a href="">Wikimedia Commons</a></figcaption>
                                 </figure>
-                            </div>
+                            </div>-->
                         </div>
                         <div class="text-center p-4">
                             <xsl:call-template name="blockquote"/>
