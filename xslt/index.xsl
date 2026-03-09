@@ -40,7 +40,7 @@
                               <h1 class="lh-base"><span class="all-caps display-4">Digitale <br/>Karl Kraus <br/>Bibliographie</span></h1>
                               <p class="lead fs-3">Digitalisierte Fassung von 
                                   <br/>Sigurd Paul Scheichls 
-                                  <br/><span class="fst-italic">Kommentierter Auswahlbibliographie zu Karl Kraus</span> – (KAB, 1975ff.)
+                                  <br/><span class="fst-italic">Kommentierter Auswahlbibliographie zu Karl Kraus</span> (KAB, 1975ff.)
                               </p>
                               <p class="lead">Herausgegeben von Bernhard Oberreither und Peter Andorfer</p>
                               <div class="d-grid gap-2 d-md-flex justify-content-md-start">
