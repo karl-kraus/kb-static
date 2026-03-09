@@ -33,14 +33,14 @@ const columns = [
     title: "Ortsname",
     field: "Ortsname",
     formatter: linkToDetailView,
-    resizable: true,
+    resizable: true
   },
   {
     headerFilter: "input",
     title: "Erwähnungen",
     field: "mentions",
     formatter: "plaintext",
-    resizable: true,
+    resizable: true
   },
   /* the following fields are necessary, 
     provide a string val each in your html-table,
@@ -50,14 +50,14 @@ const columns = [
     field: "lat",
     formatter: "plaintext",
     resizable: false,
-    visible: false,
+    visible: false
   },
   {
     title: "lng",
     field: "lng",
     formatter: "plaintext",
     resizable: false,
-    visible: false,
+    visible: false
   },
   {
     title: "linkToEntity",
@@ -65,6 +65,7 @@ const columns = [
     formatter: "plaintext",
     resizable: false,
     visible: false,
+    download: true
   },
   /* for the following, provide a list of related Objects, 
   eg. documents referencing the place represented by the row.

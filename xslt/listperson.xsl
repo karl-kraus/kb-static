@@ -56,7 +56,7 @@
                                     <th scope="col" tabulator-headerFilter="input" tabulator-formatter="html" tabulator-download="false" tabulator-minWidth="350">Name</th>
                                     <th scope="col" tabulator-visible="false" tabulator-download="true">name_</th>
                                     <th scope="col" tabulator-download="true" tabulator-headerFilter="number">Werke</th>
-                                    <th scope="col" tabulator-visible="false" tabulator-headerFilter="input">ID</th>
+                                    <th scope="col" tabulator-visible="false" tabulator-headerFilter="input" tabulator-download="true">ID</th>
                                 </tr>
                             </thead>
                             <tbody>

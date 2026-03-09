@@ -27,6 +27,19 @@ function fetch_tabulatordata_and_build_table(
       });
   } else {
     let table = build_map_table(table_cfg);
+    document.getElementById("download-csv").addEventListener("click", function(){
+                        table.download("csv", "data.csv");
+                        });
+                        
+                        //trigger download of data.json file
+                        document.getElementById("download-json").addEventListener("click", function(){
+                        table.download("json", "data.json");
+                        });
+                        
+                        //trigger download of data.html file
+                        document.getElementById("download-html").addEventListener("click", function(){
+                        table.download("html", "data.html", {style:true});
+                        });
     populateMapFromTable(
       table,
       map,
