@@ -100,6 +100,7 @@
                                 </xsl:for-each>
                             </tbody>
                         </table>
+                        <xsl:call-template name="tabulator_dl_buttons"/>
                         <div class="text-center p-4">
                             <xsl:call-template name="blockquote">
                                 <xsl:with-param name="pageId" select="'listplace.html'"/>
@@ -113,8 +114,9 @@
                 <script src="js/make_map_and_table.js"/>
                 
                 <script>
-                    build_map_and_table(map_cfg, table_cfg, wms_cfg=null, tms_cfg=tms_cfg);
+                    build_map_and_table(map_cfg, table_cfg, wms_cfg=null, tms_cfg=tms_cfg);                   
                 </script>
+                
             </body>
         </html>
         <xsl:for-each select=".//tei:place[@xml:id]">
