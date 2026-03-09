@@ -10,7 +10,7 @@
         <div class="mt-5">
                   <span class="fs-6 fw-bold">How to cite:</span>
                   <span class="fs-6">
-                     Digitale Karl-Kraus-Bibliographie. Basierend auf Sigurd Paul Scheichls
+                     Digitale Karl-Kraus-Bibliographie. Digitale Fassung von Sigurd Paul Scheichls
                       Kommentierter Auswahlbibliographie zu Karl Kraus. Hrsg. v. Bernhard 
                       Oberreither und Peter Andorfer. ACDH. Wien 2025. URL: 
                       <a href="{$fullUrl}"><xsl:value-of select="$fullUrl"/></a>
