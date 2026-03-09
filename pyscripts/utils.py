@@ -13,7 +13,7 @@ dummy_entry = """
         <fileDesc>
             <titleStmt>
                 <title level="a"></title>
-                <title level="m">Digitale Karl-Kraus-Bibliographie. Basierend auf Sigurd Paul Scheichls Kommentierter Auswahlbibliographie zu Karl Kraus</title>
+                <title level="m">Digitale Karl-Kraus-Bibliographie. Digitalisierte Fassung von Sigurd Paul Scheichls Kommentierter Auswahlbibliographie zu Karl Kraus</title>
                 <editor ref="https://d-nb.info/gnd/1036708799">Bernhard Oberreither</editor>
 			    <editor ref="https://d-nb.info/gnd/1043833846">Peter Andorfer</editor>
             </titleStmt>
