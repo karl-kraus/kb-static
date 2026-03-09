@@ -71,6 +71,17 @@
     <xsl:template match="tei:div">
         <div id="{generate-id()}"><xsl:apply-templates/></div>
     </xsl:template>
+        
+    <xsl:template match="tei:table">
+      <table class="table"><xsl:apply-templates select="tei:row"/></table>
+    </xsl:template>
+    <xsl:template match="tei:row">
+      <tr><xsl:apply-templates select="tei:cell"/></tr>
+    </xsl:template>
+    <xsl:template match="tei:cell">
+      <td><xsl:value-of select="."/></td>
+    </xsl:template>
+    
     <xsl:template match="tei:lb">
         <br/>
     </xsl:template>
