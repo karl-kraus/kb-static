@@ -38,7 +38,7 @@
                                     <a href="mailto:bernhard.oberreither@oeaw.ac.at">bernhard.oberreither@oeaw.ac.at</a>.
                                 </div>
                               <h1 class="lh-base"><span class="all-caps display-4">Digitale <br/>Karl Kraus <br/>Bibliographie</span></h1>
-                              <p class="lead fs-4">Basierend auf Sigurd Paul Scheichls 
+                              <p class="lead fs-3">Digitalisierte Fassung von Sigurd Paul Scheichls 
                                   <br/>
                                   <span class="fst-italic">Kommentierter Auswahlbibliographie zu Karl Kraus</span>
                                   <br/>– KAB (1975ff.)
