@@ -11,6 +11,7 @@
     <xsl:import href="partials/html_footer.xsl"/>
     <xsl:import href="partials/blockquote.xsl"/>
     <xsl:import href="partials/zotero.xsl"/>
+    <xsl:import href="partials/ref.xsl"/>
 
     
     
