@@ -6,6 +6,7 @@
 ## development
 * clone the repo
 * run `./shellscripts/fetch_data.sh`
+* run `./shellscripts/process_data.sh`
 * run `ant`
 
 ## Licenses
