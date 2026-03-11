@@ -42,23 +42,36 @@
                         </ol>
                     </nav>
                     <div class="container">                        
-                        <h1><xsl:value-of select="$doc_title"/></h1>
-                        <h2>Texte pro Jahr</h2>    
-                        <canvas id="bibl-by-year"></canvas>
+                        <h1>
+                            <xsl:value-of select="$doc_title"/>
+                        </h1>
+                        <div class="pt-3">
+                            <h2>Texte pro Jahr</h2>
+                            <canvas class="pt-2" data-chart-type="bar" id="bibl-per-year"></canvas>
+                        </div>
 
-                        <h2>Texte pro Autor*in</h2>    
-                        <canvas id="bibl-by-author"></canvas>
+                        <div class="pt-3">
+                            <h2>Texte pro Autor*in</h2>
+                            <canvas class="pt-2" data-chart-type="bar" id="bibl-per-author"></canvas>
+                        </div>
+
+                        <div class="pt-3">
+                            <h2>Texte pro Ort</h2>
+                            <canvas class="pt-2" data-chart-type="bar" id="bibl-per-place"></canvas>
+                        </div>
+
+
                         <div class="text-center p-4">
                             <xsl:call-template name="blockquote">
                                 <xsl:with-param name="pageId" select="'charts.html'"/>
                             </xsl:call-template>
                         </div>
-
                     </div>
                 </main>
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                <script src="js/charts/bibl-by-year.js"/>
-                <script src="js/charts/bibl-by-author.js"/>
+                <!-- <script src="js/charts/bibl-per-year.js"/>
+                <script src="js/charts/bibl-per-author.js"/> -->
+                <script src="js/charts/bar-charts.js"/> 
                 <xsl:call-template name="html_footer"/>
             </body>
         </html>
