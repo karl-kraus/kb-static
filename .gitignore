@@ -6,6 +6,7 @@ html/*.xml
 html/beacon.txt
 /html/oai-pmh
 data/imprint.xml
+html/vis-data
 
 data/indices/*.xml
 data/editions/*.xml
@@ -147,3 +148,4 @@ desktop.ini
 
 # MacOS
 .DS_Store
+foo.json
