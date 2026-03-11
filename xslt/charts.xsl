@@ -46,17 +46,26 @@
                             <xsl:value-of select="$doc_title"/>
                         </h1>
                         <div class="pt-3">
-                            <h2>Texte pro Jahr</h2>
+                            <div class="d-flex align-items-center justify-content-between gap-3">
+                                <h2 class="mb-0">Texte pro Jahr</h2>
+                                <button class="btn btn-outline-secondary btn-sm" type="button" data-chart-reset="bibl-per-year">Reset zoom</button>
+                            </div>
                             <canvas class="pt-2" data-chart-type="bar" id="bibl-per-year"></canvas>
                         </div>
 
                         <div class="pt-3">
-                            <h2>Texte pro Autor*in</h2>
+                            <div class="d-flex align-items-center justify-content-between gap-3">
+                                <h2 class="mb-0">Texte pro Autor*in</h2>
+                                <button class="btn btn-outline-secondary btn-sm" type="button" data-chart-reset="bibl-per-author">Reset zoom</button>
+                            </div>
                             <canvas class="pt-2" data-chart-type="bar" id="bibl-per-author"></canvas>
                         </div>
 
                         <div class="pt-3">
-                            <h2>Texte pro Ort</h2>
+                            <div class="d-flex align-items-center justify-content-between gap-3">
+                                <h2 class="mb-0">Texte pro Ort</h2>
+                                <button class="btn btn-outline-secondary btn-sm" type="button" data-chart-reset="bibl-per-place">Reset zoom</button>
+                            </div>
                             <canvas class="pt-2" data-chart-type="bar" id="bibl-per-place"></canvas>
                         </div>
 
@@ -69,8 +78,8 @@
                     </div>
                 </main>
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                <!-- <script src="js/charts/bibl-per-year.js"/>
-                <script src="js/charts/bibl-per-author.js"/> -->
+                <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+                <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.2.0/dist/chartjs-plugin-zoom.min.js"></script>
                 <script src="js/charts/bar-charts.js"/> 
                 <xsl:call-template name="html_footer"/>
             </body>
