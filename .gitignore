@@ -6,8 +6,7 @@ html/*.xml
 html/beacon.txt
 /html/oai-pmh
 data/imprint.xml
-html/vis-data
-
+/html/js/charts/data
 data/indices/*.xml
 data/editions/*.xml
 data/meta/*.xml
