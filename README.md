@@ -9,6 +9,14 @@
 * run `./shellscripts/process_data.sh`
 * run `ant`
 
+### start dev server
+* open html folder
+```shell
+cd html
+uv run -m http.server
+```
+Open [http://127.0.0.1:8000/](http://127.0.0.1:8000/) in browser.
+
 ## Licenses
 
 This project is released under the [MIT License](LICENSE)
