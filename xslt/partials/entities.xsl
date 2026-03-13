@@ -3,80 +3,148 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tei="http://www.tei-c.org/ns/1.0"
     version="2.0" exclude-result-prefixes="xsl tei xs">
     <xsl:template match="tei:bibl" name="bibl_detail">
-        <dl>
-            <dt>Kategorie</dt>
-            <dd>
-                <xsl:value-of select="./tei:note[@type='category']/text()"/>
-            </dd>
-            <xsl:if test="./tei:author">
-                <dt>Autor*innen</dt>
-                <xsl:for-each select="./tei:author">
-                    <dd>
-                        <xsl:choose>
-                            <xsl:when test="@key">
-                                <a href="{replace(@key, '#', '')||'.html'}">
+        <div class="col-lg-6">
+            <dl>
+                <dt>Kategorie</dt>
+                <dd>
+                    <xsl:value-of select="./tei:note[@type='category']/text()"/>
+                </dd>
+                <dt>Nummer</dt>
+                <dd>
+                    <xsl:value-of select="./tei:num[@type='id']/text()"/>
+                </dd>
+                <xsl:if test="./tei:author">
+                    <dt>Autor*innen</dt>
+                    <xsl:for-each select="./tei:author">
+                        <dd>
+                            <xsl:choose>
+                                <xsl:when test="@key">
+                                    <a href="{replace(@key, '#', '')||'.html'}">
+                                        <xsl:value-of select="string-join(.//text())"/>
+                                    </a>
+                                </xsl:when>
+                                <xsl:otherwise>
                                     <xsl:value-of select="string-join(.//text())"/>
-                                </a>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:value-of select="string-join(.//text())"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
+                                </xsl:otherwise>
+                            </xsl:choose>
 
-                    </dd>
-                </xsl:for-each>
-            </xsl:if>
-            <xsl:if test="./tei:title[@level='j']">
-                <dt>erschienen in</dt>
-                <dd>
-                    <xsl:value-of select="./tei:title[@level='j']"/>
-                </dd>
-            </xsl:if>
-            <xsl:if test="./tei:date">
-                <dt>Datum</dt>
-                <dd>
-                    <xsl:value-of select="./tei:date"/>
-                </dd>
-            </xsl:if>
-            <xsl:if test="./tei:pubPlace">
-                <dt>Orte</dt>
-                <xsl:for-each select="./tei:pubPlace">
+                        </dd>
+                    </xsl:for-each>
+                </xsl:if>
+
+
+                <xsl:if test="./tei:title[@level='a']">
+                    <dt>Titel</dt>
                     <dd>
-                        <xsl:choose>
-                            <xsl:when test="@key">
-                                <a href="{replace(@key, '#', '')||'.html'}">
+                        <xsl:value-of select="./tei:title[@level='a']"/>
+                        <xsl:if test="./tei:title[@level='a' and @type='subtitle']"><xsl:text>. </xsl:text>
+                            <xsl:value-of select="./tei:title[@level='a' and @type='subtitle']"/>
+                        </xsl:if>
+                    </dd>
+                    
+                    <dt>Erschienen in</dt>
+                    <dd>
+                        <xsl:if test="./tei:title[@level='j']">
+                            <xsl:value-of select="./tei:title[@level='j']"/>
+                        </xsl:if>
+                        <xsl:if test="./tei:title[@level='m']">
+                            <xsl:value-of select="./tei:title[@level='m']"/>
+                        </xsl:if>
+                    </dd>
+                </xsl:if>
+
+                 <xsl:if test="not(./tei:title[@level='a']) and ./tei:title[@level='m']">
+                    <dt>Titel</dt>
+                    <dd>
+                        <xsl:value-of select="./tei:title[@level='m']"/>
+                        <xsl:if test="./tei:title[@level='m' and @type='subtitle']"><xsl:text>. </xsl:text>
+                            <xsl:value-of select="./tei:title[@level='m' and @type='subtitle']"/>
+                        </xsl:if>
+                    </dd>
+                </xsl:if>
+                
+
+                <xsl:if test="./tei:num[@type='volume']">
+                    <dt>Nummer</dt>
+                    <dd>
+                        <xsl:value-of select="./tei:num[@type='volume']"/>
+                    </dd>
+                </xsl:if>
+
+                <xsl:if test="./tei:title[@level='s']">
+                    <dt>Serientitel</dt>
+                    <dd>
+                        <xsl:value-of select="./tei:title[@level='s']"/>
+                    </dd>
+                </xsl:if>
+
+                <xsl:if test="./tei:num[@type='series']">
+                    <dt>Nummer</dt>
+                    <dd>
+                        <xsl:value-of select="./tei:num[@type='series']"/>
+                    </dd>
+                </xsl:if>
+
+
+                <xsl:if test="./tei:date">
+                    <dt>Datum</dt>
+                    <dd>
+                        <xsl:value-of select="./tei:date"/>
+                    </dd>
+                </xsl:if>
+
+                 <xsl:if test="./tei:publisher">
+                    <dt>Verlag</dt>
+                    <dd>
+                        <xsl:value-of select="./tei:publisher"/>
+                    </dd>
+                </xsl:if>
+
+                <xsl:if test="./tei:pubPlace">
+                    <dt>Ort(e)</dt>
+                    <xsl:for-each select="./tei:pubPlace">
+                        <dd>
+                            <xsl:choose>
+                                <xsl:when test="@key">
+                                    <a href="{replace(@key, '#', '')||'.html'}">
+                                        <xsl:value-of select="string-join(.//text())"/>
+                                    </a>
+                                </xsl:when>
+                                <xsl:otherwise>
                                     <xsl:value-of select="string-join(.//text())"/>
-                                </a>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:value-of select="string-join(.//text())"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                        
-                    </dd>
-                </xsl:for-each>
-            </xsl:if>
-            
-            <xsl:if test="./tei:idno">
-                <dt>Identifiers</dt>
-                <xsl:for-each select="./tei:idno">
-                    <dd>
-                        <xsl:choose>
-                            <xsl:when test="starts-with(./text(), 'http')">
-                                <a href="{./text()}">
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            
+                        </dd>
+                    </xsl:for-each>
+                </xsl:if>
+                
+                <xsl:if test="./tei:idno">
+                    <dt>Identifiers</dt>
+                    <xsl:for-each select="./tei:idno">
+                        <dd>
+                            <xsl:choose>
+                                <xsl:when test="starts-with(./text(), 'http')">
+                                    <a href="{./text()}">
+                                        <xsl:value-of select="."/>
+                                    </a>
+                                </xsl:when>
+                                <xsl:otherwise>
                                     <xsl:value-of select="."/>
-                                </a>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:value-of select="."/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </dd>
-                </xsl:for-each>
-            </xsl:if>
-            <dt>Kommentar</dt>
-            <dd><xsl:apply-templates select="./tei:note[@type='comment']"></xsl:apply-templates></dd>
-        </dl>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </dd>
+                    </xsl:for-each>
+                </xsl:if>
+            </dl>
+        </div>
+        <div class="col-lg-6">
+            <dl>
+                <dt>Kommentar</dt>
+                <dd><xsl:apply-templates select="./tei:note[@type='comment']"></xsl:apply-templates></dd>
+                <dd><xsl:for-each select="./tei:note[@type='source']"><xsl:value-of select="."/></xsl:for-each></dd>
+            </dl>
+        </div>
     </xsl:template>
 
     <xsl:template match="tei:org" name="org_detail">

@@ -1,4 +1,5 @@
 import os
+import re
 
 from acdh_xml_pyutils.xml import NSMAP
 from lxml import etree as ET
@@ -34,122 +35,155 @@ dummy_entry = """
 """  # noqa E501
 
 
-# this function was written by Claude Sonnet 4.5 because no sane person would do this
 def generate_quote(bibl: ET.Element) -> str:
-    """Generate a full bibliographic citation from a TEI bibl element.
+    """Generate a Chicago-style bibliographic citation from a TEI bibl element."""
 
-    Args:
-        bibl (ET.Element): a tei:bibl node
+    def clean_text(t):
+        if not t:
+            return ""
+        t = t.replace("\n", " ").replace("\r", " ")
+        t = re.sub(r"\s+", " ", t)
+        return t.strip()
 
-    Returns:
-        str: A full bibliographic citation in standard bibliographic format
-    """
-    parts = []
+    def join_names(nodes):
+        names = [clean_text("".join(n.itertext())) for n in nodes if "".join(n.itertext()).strip()]
+        if not names:
+            return ""
+        if len(names) == 1:
+            return names[0]
+        if len(names) == 2:
+            return f"{names[0]} and {names[1]}"
+        return ", ".join(names[:-1]) + ", and " + names[-1]
 
-    # Authors/Editors
-    authors = bibl.xpath(".//tei:author", namespaces=NSMAP)
-    editors = bibl.xpath(".//tei:editor", namespaces=NSMAP)
+    authors = join_names(bibl.xpath(".//tei:author", namespaces=NSMAP))
+    editors = join_names(bibl.xpath(".//tei:editor", namespaces=NSMAP))
 
-    if authors:
-        author_names = [author.text.strip() for author in authors if author.text]
-        if len(author_names) > 1:
-            parts.append("; ".join(author_names))
-        elif author_names:
-            parts.append(author_names[0])
-    elif editors:
-        editor_names = [editor.text.strip() for editor in editors if editor.text]
-        if editor_names:
-            parts.append("; ".join(editor_names))
-
-    # Title
-    title_m = bibl.xpath(".//tei:title[@level='m']", namespaces=NSMAP)
     title_a = bibl.xpath(".//tei:title[@level='a']", namespaces=NSMAP)
+    title_m = bibl.xpath(".//tei:title[@level='m'][not(@type='subtitle')]", namespaces=NSMAP)
+    subtitle = bibl.xpath(".//tei:title[@level='m'][@type='subtitle']", namespaces=NSMAP)
     title_j = bibl.xpath(".//tei:title[@level='j']", namespaces=NSMAP)
     title_s = bibl.xpath(".//tei:title[@level='s']", namespaces=NSMAP)
 
-    # Article title (level='a')
-    if title_a:
-        title_text = "".join(title_a[0].itertext()).strip()
-        parts.append(f'"{title_text}"')
+    def get(node_list):
+        return clean_text("".join(node_list[0].itertext())) if node_list else ""
 
-    # Monograph title (level='m')
-    if title_m:
-        for tm in title_m:
-            if tm.get("type") != "subtitle":
-                title_text = "".join(tm.itertext()).strip()
-                parts.append(title_text)
-                break
+    title_a = get(title_a)
+    title_m = get(title_m)
+    subtitle = get(subtitle)
+    title_j = get(title_j)
+    title_s = get(title_s)
 
-        # Add subtitle if exists
-        subtitle = bibl.xpath(
-            ".//tei:title[@level='m'][@type='subtitle']", namespaces=NSMAP
-        )
-        if subtitle:
-            subtitle_text = "".join(subtitle[0].itertext()).strip()
-            parts.append(subtitle_text)
+    # Titel + Untertitel immer mit Punkt trennen
+    if subtitle:
+        title_full = f"{title_m}. {subtitle}"
+    else:
+        title_full = title_m
 
-    # Journal title (level='j')
-    if title_j:
-        journal_text = "".join(title_j[0].itertext()).strip()
-        parts.append(f"In: {journal_text}")
+    places = [clean_text("".join(p.itertext())) for p in bibl.xpath(".//tei:pubPlace", namespaces=NSMAP)]
+    publishers = [clean_text("".join(p.itertext())) for p in bibl.xpath(".//tei:publisher", namespaces=NSMAP)]
 
-    # Edition
-    edition = bibl.xpath(".//tei:edition", namespaces=NSMAP)
-    if edition and edition[0].text:
-        parts.append(edition[0].text.strip())
+    place_str = ", ".join(places)
+    publisher_str = ", ".join(publishers)
 
-    # Publication place and publisher
-    pub_place = bibl.xpath(".//tei:pubPlace", namespaces=NSMAP)
-    publisher = bibl.xpath(".//tei:publisher", namespaces=NSMAP)
-
-    pub_info = []
-    if pub_place and pub_place[0].text:
-        pub_info.append(pub_place[0].text.strip())
-    if publisher and publisher[0].text:
-        pub_info.append(publisher[0].text.strip())
-
-    if pub_info:
-        parts.append(": ".join(pub_info))
-
-    # Series (level='s')
-    if title_s:
-        series_text = "".join(title_s[0].itertext()).strip()
-        series_num = bibl.xpath(".//tei:num[@type='series']", namespaces=NSMAP)
-        if series_num and series_num[0].text:
-            parts.append(f"({series_text} {series_num[0].text.strip()})")
-        else:
-            parts.append(f"({series_text})")
-
-    # Date
     date = bibl.xpath(".//tei:date", namespaces=NSMAP)
+    year = ""
     if date:
-        date_text = date[0].text.strip() if date[0].text else date[0].get("when", "")
-        if date_text:
-            parts.append(date_text)
+        year = clean_text(date[0].get("when") or (date[0].text or ""))
 
-    # Issue/volume numbers (for journals)
-    nums = bibl.xpath(
-        ".//tei:num[not(@type='id') and not(@type='category') and not(@type='series')]",
-        namespaces=NSMAP,
-    )
-    for num in nums:
-        if num.text:
-            parts.append(num.text.strip())
+    scope_nodes = bibl.xpath(".//tei:biblScope", namespaces=NSMAP)
+    scope = clean_text(" ".join("".join(s.itertext()) for s in scope_nodes))
 
-    # Page range/scope
-    bibl_scope = bibl.xpath(".//tei:biblScope", namespaces=NSMAP)
-    if bibl_scope:
-        for scope in bibl_scope:
-            scope_text = "".join(scope.itertext()).strip()
-            if scope_text:
-                parts.append(scope_text)
+    nums = [
+        clean_text(n.text)
+        for n in bibl.xpath(
+            ".//tei:num[not(@type='id') and not(@type='category') and not(@type='series')]",
+            namespaces=NSMAP,
+        )
+        if n.text
+    ]
+    num = " ".join(nums)
 
-    # Join all parts with appropriate punctuation
-    citation = ", ".join(parts)
+    citation = ""
 
-    # Clean up multiple spaces and ensure proper ending
-    citation = " ".join(citation.split())
-    if citation and not citation.endswith("."):
+    # JOURNAL ARTICLE
+    if title_a and title_j:
+
+        if authors:
+            citation += f"{authors}. "
+
+        citation += f'"{title_a}." {title_j}'
+
+        if num:
+            citation += f" {num}"
+
+        if year:
+            citation += f" ({year})"
+
+        if scope:
+            citation += f": {scope}"
+
         citation += "."
 
-    return citation
+    # CHAPTER IN EDITED BOOK
+    elif title_a and title_m:
+
+        if authors:
+            citation += f"{authors}. "
+
+        citation += f'"{title_a}." In: {title_full}.'
+
+        if editors:
+            citation += f" Edited by {editors}"
+
+        pub = ""
+
+        if place_str:
+            pub += place_str
+        if publisher_str:
+            pub += f": {publisher_str}" if pub else publisher_str
+        if year:
+            pub += f" {year}"
+
+        if pub:
+            citation += f" {pub}"
+
+        if scope:
+            citation += f", {scope}"
+
+        citation += "."
+
+    # MONOGRAPH / EDITED BOOK
+    elif title_m:
+
+        if authors:
+            citation += f"{authors}. "
+        elif editors:
+            citation += f"{editors}, ed. "
+
+        citation += f"{title_full}."
+
+        if title_s:
+            citation += f" {title_s}."
+
+        pub = ""
+
+        if place_str:
+            pub += place_str
+        if publisher_str:
+            pub += f": {publisher_str}" if pub else publisher_str
+        if year:
+            pub += f" {year}"
+
+        if pub:
+            citation += f" {pub}"
+
+        if scope:
+            citation += f", {scope}"
+
+        citation += "."
+
+    citation = re.sub(r"\s+", " ", citation)
+    citation = re.sub(r"\.\.+", ".", citation)
+
+    return citation.strip()
+    

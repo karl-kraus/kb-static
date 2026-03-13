@@ -157,10 +157,10 @@
                                             </i>
                                         </a>
                                     </div>
-                                    <div class="col-md-8 col-lg-8 col-sm-12 text-center">
-                                        <h1 class="text-center">
+                                    <div class="col-md-8 col-lg-8 col-sm-12 text-left">
+                                        <h2 class="text-left">
                                             <xsl:value-of select="$name"/>
-                                        </h1>
+                                        </h2>
                                         <div>
                                             <a href="{$xmlName}">
                                                 <i class="bi bi-download fs-2" title="Zum TEI/XML Dokument" visually-hidden="true">
