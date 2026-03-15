@@ -153,10 +153,17 @@
                 <dl>
                     <dt>Kommentar</dt>
                     <dd><xsl:apply-templates select="./tei:note[@type='comment']"></xsl:apply-templates></dd>
+                    <dt>Quelle</dt>
                     <dd><xsl:for-each select="./tei:note[@type='source']"><xsl:value-of select="."/></xsl:for-each></dd>
                 </dl>
             </div>
         </div>
+    </xsl:template>
+
+    <xsl:template match="tei:hi[@rendition='#italic']">
+        <span class="fst-italic">
+            <xsl:apply-templates/>
+        </span>
     </xsl:template>
 
     <xsl:template match="tei:org" name="org_detail">

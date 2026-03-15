@@ -133,7 +133,7 @@ def generate_quote(bibl: ET.Element) -> str:
         citation += f'"{title_a}." In: {title_full}.'
 
         if editors:
-            citation += f" Edited by {editors}"
+            citation += f" Hrsg. v. {editors}"
 
         pub = ""
 
