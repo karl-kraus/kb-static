@@ -9,6 +9,35 @@
 * run `./shellscripts/process_data.sh`
 * run `ant`
 
+## js-development
+* for elaborate JS-development you can start a vite server
+```shell
+npm install
+npm run dev
+```
+* files you'd like to ingest javascript into need to add `<xsl:param name="production"></xsl:param>` into the matching xslt
+* as well as below the closing `<body>` tag add something like (be aware to match the name of the `.ts` file)
+```xml
+<xsl:choose>
+    <xsl:when test="lower-case(normalize-space($production)) = ('1', 'true', 'yes', 'on')">
+        <script src="assets/charts.js"/>
+    </xsl:when>
+    <xsl:otherwise>
+        <script type="module" src="http://localhost:5173/@vite/client"></script>
+        <script type="module" src="http://localhost:5173/src/charts.ts"></script>
+    </xsl:otherwise>
+</xsl:choose>
+```
+* now you should have a hot reload server setup
+* don't forget to modify the `build.xml` by adding `<param name="production" expression="${production}"/>`, e.g. 
+```xml
+<xslt in="${index}" out="${target}/charts.html" style="./xslt/charts.xsl">
+    <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+    <classpath location="${basedir}/saxon/saxon9he.jar"/>
+    <param name="production" expression="${production}"/>
+</xslt>
+```
+
 ### start dev server
 * open html folder
 ```shell
