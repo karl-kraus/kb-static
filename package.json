@@ -9,6 +9,8 @@
     "build": "vite build"
   },
   "dependencies": {
-    "chart.js": "^4.5.1"
+    "chart.js": "^4.5.1",
+    "graphology": "^0.26.0",
+    "sigma": "^3.0.2"
   }
 }
