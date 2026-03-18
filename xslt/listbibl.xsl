@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
     version="2.0" exclude-result-prefixes="xsl tei xs">
-    <xsl:output encoding="UTF-8" media-type="text/html" method="html" version="5.0" indent="yes" omit-xml-declaration="yes"/>
     
-    <xsl:import href="partials/html_navbar.xsl"/>
-    <xsl:import href="partials/html_head.xsl"/>
-    <xsl:import href="partials/html_footer.xsl"/>
-    <xsl:import href="partials/tabulator_dl_buttons.xsl"/>
-    <xsl:import href="partials/tabulator_js.xsl"/>
-    <xsl:import href="partials/entities.xsl"/>
-    <xsl:import href="partials/blockquote.xsl"/>
-    <xsl:import href="partials/zotero.xsl"/>
+    <xsl:import href="./partials/html_navbar.xsl"/>
+    <xsl:import href="./partials/html_head.xsl"/>
+    <xsl:import href="./partials/html_footer.xsl"/>
+    <xsl:import href="./partials/tabulator_dl_buttons.xsl"/>
+    <xsl:import href="./partials/tabulator_js.xsl"/>
+    <xsl:import href="./partials/entities.xsl"/>
+    <xsl:import href="./partials/blockquote.xsl"/>
+    <xsl:import href="./partials/zotero.xsl"/>
+    <xsl:output encoding="UTF-8" media-type="text/html" method="html" version="5.0" indent="yes" omit-xml-declaration="yes"/>
 
     <xsl:template match="/">
         <xsl:variable name="doc_title">
@@ -120,6 +121,9 @@
             <xsl:variable name="filename" select="concat(./@xml:id, '.html')"/>
             <xsl:variable name="xmlName" select="'bibl/'||./@xml:id||'.xml'"/>
             <xsl:variable name="name" select="@n"></xsl:variable>
+            <xsl:variable name="kab-id">
+                <xsl:value-of select="./tei:num[@type='id']/text()"/>
+            </xsl:variable>
             <xsl:result-document href="{$filename}">
                 <html class="h-100" lang="{$default_lang}">
                     <head>
@@ -141,13 +145,16 @@
                                         <a href="index.html"><xsl:value-of select="$project_short_title"/></a>
                                     </li>
                                     <li class="breadcrumb-item">
-                                        <a href="listbibl.html"><xsl:value-of select="$doc_title"/></a>
+                                        <a href="listbibl.html">Bibliographie</a>
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">
+                                        <xsl:value-of select="$kab-id"/>
                                     </li>
                                 </ol>
                             </nav>
                             <div class="container">
-                                <div class="row">
-                                    <div class="col-md-2 col-lg-2 col-sm-12 text-start">
+                                <div class="row pb-4">
+                                    <div class="col-md-2 col-lg-2 col-sm-12">
                                         <a>
                                             <xsl:attribute name="href">
                                                 <xsl:value-of select="./@prev||'.html'"/>
@@ -157,11 +164,11 @@
                                             </i>
                                         </a>
                                     </div>
-                                    <div class="col-md-8 col-lg-8 col-sm-12 text-left">
-                                        <h2 class="text-left">
+                                    <div class="col-md-8 col-lg-8 col-sm-12 text-start">
+                                        <h1 class="fs-2">
                                             <xsl:value-of select="$name"/>
-                                        </h2>
-                                        <div>
+                                        </h1>
+                                        <div class="text-center">
                                             <a href="{$xmlName}">
                                                 <i class="bi bi-download fs-2" title="Zum TEI/XML Dokument" visually-hidden="true">
                                                     <span class="visually-hidden">Zum TEI/XML Dokument</span>
