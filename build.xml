@@ -19,6 +19,11 @@
         <classpath location="${basedir}/saxon/saxon9he.jar"/>
         <param name="production" expression="${production}"/>
     </xslt>
+    <xslt in="${index}" out="${target}/network.html" style="./xslt/network.xsl">
+        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+        <classpath location="${basedir}/saxon/saxon9he.jar"/>
+        <param name="production" expression="${production}"/>
+    </xslt>
     <xslt in="${index}" out="${target}/404.html" style="./xslt/404.xsl">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <classpath location="${basedir}/saxon/saxon9he.jar"/>
