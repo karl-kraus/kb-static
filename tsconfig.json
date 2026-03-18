@@ -2,7 +2,8 @@
   "compilerOptions": {
     "types": ["vite/client", "node"],
     "module": "ESNext",
-    "moduleResolution": "Bundler"
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true
   },
   "include": ["src/**/*.ts"]
 }
