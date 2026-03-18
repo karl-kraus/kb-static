@@ -12,6 +12,7 @@ data/editions/*.xml
 data/meta/*.xml
 /node_modules
 html/assets
+.vite
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
