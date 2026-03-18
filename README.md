@@ -4,12 +4,21 @@
 * build with [DSE-Static-Cookiecutter](https://github.com/acdh-oeaw/dse-static-cookiecutter)
 
 ## development
+
+This project uses [uv](https://docs.astral.sh/uv/)
+
 * clone the repo
 * run `./shellscripts/fetch_data.sh`
 * run `./shellscripts/process_data.sh`
 * run `ant`
+* start a dev server
+```shell
+cd html
+uv run -m http.server
+```
+* Open [http://127.0.0.1:8000/](http://127.0.0.1:8000/) in browser.
 
-## js-development
+### js-development
 * for elaborate JS-development you can start a vite server
 ```shell
 npm install
@@ -37,14 +46,6 @@ npm run dev
     <param name="production" expression="${production}"/>
 </xslt>
 ```
-
-### start dev server
-* open html folder
-```shell
-cd html
-uv run -m http.server
-```
-Open [http://127.0.0.1:8000/](http://127.0.0.1:8000/) in browser.
 
 ## Licenses
 
