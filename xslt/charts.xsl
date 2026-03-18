@@ -45,12 +45,8 @@
                         <h1>
                             <xsl:value-of select="$doc_title"/>
                         </h1>
-                       <div>
-                           <canvas id="biblPerAuthors"></canvas>
-                       </div>
-
-
-                        <div class="text-center p-4">
+                       <div id="chartCanvas"/>
+                       <div class="text-center p-4">
                             <xsl:call-template name="blockquote">
                                 <xsl:with-param name="pageId" select="'charts.html'"/>
                             </xsl:call-template>
