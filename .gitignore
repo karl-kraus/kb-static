@@ -13,6 +13,7 @@ data/meta/*.xml
 /node_modules
 html/assets
 .vite
+src/data
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

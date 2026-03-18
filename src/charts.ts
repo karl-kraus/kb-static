@@ -1,6 +1,6 @@
-import biblPerAuthors from '../html/js/charts/data/bibl-per-author.json' 
-import biblPerPlaces from '../html/js/charts/data/bibl-per-place.json' 
-import biblPerYears from '../html/js/charts/data/bibl-per-year.json' 
+import biblPerAuthors from './data/bibl-per-author.json' 
+import biblPerPlaces from './data/bibl-per-place.json' 
+import biblPerYears from './data/bibl-per-year.json' 
 import Chart from 'chart.js/auto';
 
 const container = document.getElementById("chartCanvas");
