@@ -1,9 +1,9 @@
 import data from '../html/js/charts/data/bibl-per-author.json'
 import Chart from 'chart.js/auto';
 
-const canvas = document.getElementById('bibl-per-author');
+const canvas = document.getElementById('biblPerAuthors');
 if (!(canvas instanceof HTMLCanvasElement)) {
-    throw new Error('Canvas element #bibl-per-author not found');
+    throw new Error('Canvas element #biblPerAuthors not found');
 }
 
 
@@ -15,7 +15,7 @@ new Chart(
             labels: data.labels,
             datasets: [
                 {
-                    label: 'Acquisitions by year',
+                    label: 'Texts',
                     data: data.data
                 }
             ]

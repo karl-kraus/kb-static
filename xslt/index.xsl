@@ -13,7 +13,7 @@
     <xsl:import href="./partials/zotero.xsl"/>
 
     <xsl:output encoding="UTF-8" media-type="text/html" method="html" version="5.0" indent="yes" omit-xml-declaration="yes"/>
-    <xsl:param name="debug" as="xs:string" select="'false'"/>
+    <xsl:param name="production" as="xs:string" select="'false'"/>
 
 
     <xsl:template match="/">
@@ -31,9 +31,7 @@
                 <xsl:call-template name="nav_bar"/>
                 <main class="flex-shrink-0 flex-grow-1">
                     <div class="container col-xxl-8 pt-3">
-                        <xsl:if test="lower-case(normalize-space($debug)) = ('1', 'true', 'yes', 'on')">
-                            <h1 class="alert alert-danger">DEBUG</h1>
-                        </xsl:if>
+                        
                         <xsl:call-template name="one_time_alert"/>
                         <div class="row flex-lg-row align-items-center g-5 py-5">
                             <div class="col-lg-6">
