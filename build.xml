@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." name="tei2html">
+    <property environment="env"/>
+    <condition property="production" value="${env.PRODUCTION}" else="false">
+        <isset property="env.PRODUCTION"/>
+    </condition>
     <property name="index" value="./data/meta/about.xml"/>
     <property name="target" value="./html"/>
     <property name="target_xml" value="./html/xml-view"/>
@@ -13,6 +17,7 @@
      <xslt in="${index}" out="${target}/charts.html" style="./xslt/charts.xsl">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <classpath location="${basedir}/saxon/saxon9he.jar"/>
+        <param name="production" expression="${production}"/>
     </xslt>
     <xslt in="${index}" out="${target}/404.html" style="./xslt/404.xsl">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>

@@ -10,7 +10,8 @@ data/imprint.xml
 data/indices/*.xml
 data/editions/*.xml
 data/meta/*.xml
-
+/node_modules
+html/assets
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

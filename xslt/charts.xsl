@@ -11,6 +11,8 @@
     <xsl:import href="./partials/blockquote.xsl"/>
     <xsl:import href="./partials/zotero.xsl"/>
     <xsl:output encoding="UTF-8" media-type="text/html" method="html" version="5.0" indent="yes" omit-xml-declaration="yes"/>
+    
+    <xsl:param name="production"></xsl:param>
 
     <xsl:template match="/">
         <xsl:variable name="doc_title" select="'Charts'"/>
@@ -24,7 +26,6 @@
                     <xsl:with-param name="zoteroTitle" select="$doc_title"></xsl:with-param>
                 </xsl:call-template>
             </head>
-            
             <body class="d-flex flex-column h-100">
             <xsl:call-template name="nav_bar"/>
                 <main class="flex-shrink-0 flex-grow-1">
@@ -44,43 +45,24 @@
                         <h1>
                             <xsl:value-of select="$doc_title"/>
                         </h1>
-                        <div class="pt-3">
-                            <div class="d-flex align-items-center justify-content-between gap-3">
-                                <h2 class="mb-0">Texte pro Jahr</h2>
-                                <button class="btn btn-outline-secondary btn-sm" type="button" data-chart-reset="bibl-per-year">Reset zoom</button>
-                            </div>
-                            <canvas class="pt-2" data-chart-type="bar" id="bibl-per-year"></canvas>
-                        </div>
-
-                        <div class="pt-3">
-                            <div class="d-flex align-items-center justify-content-between gap-3">
-                                <h2 class="mb-0">Texte pro Autor*in</h2>
-                                <button class="btn btn-outline-secondary btn-sm" type="button" data-chart-reset="bibl-per-author">Reset zoom</button>
-                            </div>
-                            <canvas class="pt-2" data-chart-type="bar" id="bibl-per-author"></canvas>
-                        </div>
-
-                        <div class="pt-3">
-                            <div class="d-flex align-items-center justify-content-between gap-3">
-                                <h2 class="mb-0">Texte pro Ort</h2>
-                                <button class="btn btn-outline-secondary btn-sm" type="button" data-chart-reset="bibl-per-place">Reset zoom</button>
-                            </div>
-                            <canvas class="pt-2" data-chart-type="bar" id="bibl-per-place"></canvas>
-                        </div>
-
-
-                        <div class="text-center p-4">
+                       <div id="chartCanvas"/>
+                       <div class="text-center p-4">
                             <xsl:call-template name="blockquote">
                                 <xsl:with-param name="pageId" select="'charts.html'"/>
                             </xsl:call-template>
                         </div>
                     </div>
                 </main>
-                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
-                <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.2.0/dist/chartjs-plugin-zoom.min.js"></script>
-                <script src="js/charts/bar-charts.js"/> 
                 <xsl:call-template name="html_footer"/>
+                <xsl:choose>
+                    <xsl:when test="lower-case(normalize-space($production)) = ('1', 'true', 'yes', 'on')">
+                        <script src="assets/charts.js"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <script type="module" src="http://localhost:5173/@vite/client"></script>
+                        <script type="module" src="http://localhost:5173/src/charts.ts"></script>
+                    </xsl:otherwise>
+                </xsl:choose>
             </body>
         </html>
     </xsl:template> 
