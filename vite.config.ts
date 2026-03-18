@@ -1,4 +1,13 @@
 import { defineConfig } from 'vite'
+import { readdirSync } from 'node:fs'
+import { basename, extname } from 'node:path'
+
+const srcDir = new URL('./src/', import.meta.url)
+const input = Object.fromEntries(
+  readdirSync(srcDir)
+    .filter((file) => extname(file) === '.ts')
+    .map((file) => [basename(file, '.ts'), new URL(file, srcDir).pathname])
+)
 
 export default defineConfig({
   root: 'html', // critical: serve generated HTML
@@ -15,14 +24,12 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: 'html/assets',
+    outDir: 'assets',
     emptyOutDir: false,
     rollupOptions: {
-      input: {
-        main: new URL('./src/main.ts', import.meta.url).pathname
-      },
+      input,
       output: {
-        entryFileNames: 'bundle.js'
+        entryFileNames: '[name].js'
       }
     }
   }
