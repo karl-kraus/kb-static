@@ -1,3 +1,8 @@
+:root {
+  --bs-link-color-rgb: 13, 17, 253;
+  --bs-link-color: rgb(13, 17, 253);
+}
+
 /* needed for interactive map in listplace.xsl */
 div#map {
   height: 50vh;
@@ -8,6 +13,8 @@ div#map {
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
+
+
 
 dd {
   margin-left: 1.5rem;
@@ -25,3 +32,4 @@ dd {
   max-width: 50%;
   max-height: 150px;
 }
+
