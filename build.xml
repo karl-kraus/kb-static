@@ -52,10 +52,10 @@
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <classpath location="${basedir}/saxon/saxon9he.jar"/>
     </xslt>
-    <!-- <xslt in="./data/indices/listorg.xml" out="${target}/listorg.html" style="./xslt/listorg.xsl">
+     <xslt in="./data/indices/listorg.xml" out="${target}/listorg.html" style="./xslt/listorg.xsl">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <classpath location="${basedir}/saxon/saxon9he.jar"/>
-    </xslt> -->
+    </xslt> 
     <xslt in="./data/indices/listbibl.xml" out="${target}/listbibl.html" style="./xslt/listbibl.xsl">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <classpath location="${basedir}/saxon/saxon9he.jar"/>
