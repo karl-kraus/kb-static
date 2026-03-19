@@ -50,6 +50,13 @@ for x in doc.any_xpath(".//tei:bibl[@xml:id]"):
             nodes.append({"id": item_id, "label": extract_fulltext(y), "type": "place"})
             edges.append((bibl_id, item_id))
 
+    # orgs:
+    for y in any_xpath(x, "./tei:publisher[@key]"):
+        item_id = check_for_hash(y.attrib["key"])
+        if item_id not in check_duplicates:
+            nodes.append({"id": item_id, "label": extract_fulltext(y), "type": "org"})
+            edges.append((bibl_id, item_id))
+
 graph["nodes"] = nodes
 graph["edges"] = edges
 
