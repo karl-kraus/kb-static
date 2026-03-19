@@ -17,6 +17,7 @@ const colors = {
     "bibl": "#1d4ed8",
     "author": "#10a633",
     "place": "#9333ea",
+    "org": "#db2777"
 }
 
 graph_container.style.height = "70vh";
