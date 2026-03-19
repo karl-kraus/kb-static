@@ -7,6 +7,7 @@ from lxml import etree as ET
 listbibl_file = os.path.join("data", "indices", "listbibl.xml")
 listperson_file = os.path.join("data", "indices", "listperson.xml")
 listplace_file = os.path.join("data", "indices", "listplace.xml")
+listorg_file = os.path.join("data", "indices", "listorg.xml")
 
 dummy_entry = """
 <TEI xmlns="http://www.tei-c.org/ns/1.0" xml:id="listperson.xml">
@@ -46,7 +47,11 @@ def generate_quote(bibl: ET.Element) -> str:
         return t.strip()
 
     def join_names(nodes):
-        names = [clean_text("".join(n.itertext())) for n in nodes if "".join(n.itertext()).strip()]
+        names = [
+            clean_text("".join(n.itertext()))
+            for n in nodes
+            if "".join(n.itertext()).strip()
+        ]
         if not names:
             return ""
         if len(names) == 1:
@@ -59,8 +64,12 @@ def generate_quote(bibl: ET.Element) -> str:
     editors = join_names(bibl.xpath(".//tei:editor", namespaces=NSMAP))
 
     title_a = bibl.xpath(".//tei:title[@level='a']", namespaces=NSMAP)
-    title_m = bibl.xpath(".//tei:title[@level='m'][not(@type='subtitle')]", namespaces=NSMAP)
-    subtitle = bibl.xpath(".//tei:title[@level='m'][@type='subtitle']", namespaces=NSMAP)
+    title_m = bibl.xpath(
+        ".//tei:title[@level='m'][not(@type='subtitle')]", namespaces=NSMAP
+    )
+    subtitle = bibl.xpath(
+        ".//tei:title[@level='m'][@type='subtitle']", namespaces=NSMAP
+    )
     title_j = bibl.xpath(".//tei:title[@level='j']", namespaces=NSMAP)
     title_s = bibl.xpath(".//tei:title[@level='s']", namespaces=NSMAP)
 
@@ -79,8 +88,14 @@ def generate_quote(bibl: ET.Element) -> str:
     else:
         title_full = title_m
 
-    places = [clean_text("".join(p.itertext())) for p in bibl.xpath(".//tei:pubPlace", namespaces=NSMAP)]
-    publishers = [clean_text("".join(p.itertext())) for p in bibl.xpath(".//tei:publisher", namespaces=NSMAP)]
+    places = [
+        clean_text("".join(p.itertext()))
+        for p in bibl.xpath(".//tei:pubPlace", namespaces=NSMAP)
+    ]
+    publishers = [
+        clean_text("".join(p.itertext()))
+        for p in bibl.xpath(".//tei:publisher", namespaces=NSMAP)
+    ]
 
     place_str = ", ".join(places)
     publisher_str = ", ".join(publishers)
@@ -107,7 +122,6 @@ def generate_quote(bibl: ET.Element) -> str:
 
     # JOURNAL ARTICLE
     if title_a and title_j:
-
         if authors:
             citation += f"{authors}. "
 
@@ -126,7 +140,6 @@ def generate_quote(bibl: ET.Element) -> str:
 
     # CHAPTER IN EDITED BOOK
     elif title_a and title_m:
-
         if authors:
             citation += f"{authors}. "
 
@@ -154,7 +167,6 @@ def generate_quote(bibl: ET.Element) -> str:
 
     # MONOGRAPH / EDITED BOOK
     elif title_m:
-
         if authors:
             citation += f"{authors}. "
         elif editors:
@@ -186,4 +198,3 @@ def generate_quote(bibl: ET.Element) -> str:
     citation = re.sub(r"\.\.+", ".", citation)
 
     return citation.strip()
-    
