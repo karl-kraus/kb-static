@@ -101,7 +101,7 @@
                         
                         <div class="text-center p-4">
                             <xsl:call-template name="blockquote">
-                                <xsl:with-param name="pageId" select="'listbibl.html'"/>
+                                <xsl:with-param name="pageId" select="'listperson.html'"/>
                             </xsl:call-template>
                         </div>
                     </div>

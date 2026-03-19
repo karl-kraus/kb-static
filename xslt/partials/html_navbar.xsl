@@ -41,6 +41,9 @@
                                         <a class="dropdown-item" href="listplace.html">Orte</a>
                                     </li>
                                     <li>
+                                        <a class="dropdown-item" href="listorg.html">Verlage</a>
+                                    </li>
+                                    <li>
                                         <a class="dropdown-item" href="listbibl.html">Bibliographie</a>
                                     </li>
                                 </ul>
