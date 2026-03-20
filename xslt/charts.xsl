@@ -56,7 +56,7 @@
                 <xsl:call-template name="html_footer"/>
                 <xsl:choose>
                     <xsl:when test="lower-case(normalize-space($production)) = ('1', 'true', 'yes', 'on')">
-                        <script src="assets/charts.js"/>
+                        <script type="module" src="assets/charts.js"/>
                     </xsl:when>
                     <xsl:otherwise>
                         <script type="module" src="http://localhost:5173/@vite/client"></script>
