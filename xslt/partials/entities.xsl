@@ -98,10 +98,15 @@
                     </xsl:if>
 
                     <xsl:if test="./tei:publisher">
-                        <dt>Verlag</dt>
-                        <dd>
-                            <xsl:value-of select="./tei:publisher"/>
-                        </dd>
+                        <dt>Verlag(e)</dt>
+                        <xsl:for-each select="./tei:publisher">
+                            <dd>
+                                <a href="{replace(./@key, '#', '')||'.html'}">
+                                    <xsl:value-of select="string-join(.//text())"/>
+                                </a>
+                            </dd>
+                        </xsl:for-each>
+                        
                     </xsl:if>
 
                     <xsl:if test="./tei:pubPlace">
@@ -205,12 +210,12 @@
                     <xsl:value-of select="./tei:note"/>
                 </dd>
             </xsl:if>
-            <xsl:if test="./tei:noteGrp/tei:note[@type = 'mentions']">
-                <dt>Erwähnt in</dt>
-                <xsl:for-each select="./tei:noteGrp/tei:note[@type = 'mentions']">
+            <xsl:if test="./tei:listBibl/tei:bibl">
+                <dt>Verleger der Werke</dt>
+                <xsl:for-each select="./tei:listBibl/tei:bibl[@corresp]">
                     <dd>
-                        <a href="{replace(@target, '.xml', '.html')}">
-                            <xsl:value-of select="./text()"/>
+                        <a href="{replace(@corresp, '#', '')||'.html'}">
+                            <xsl:value-of select="./@n"/>
                         </a>
                     </dd>
                 </xsl:for-each>
@@ -329,12 +334,12 @@
                     <xsl:value-of select="tokenize(./tei:location[1]/tei:geo[1], '\s')[2]"/>
                 </dd>
             </xsl:if>
-            <xsl:if test="./tei:noteGrp/tei:note[@type = 'mentions']">
-                <dt>Erwähnt in</dt>
-                <xsl:for-each select="./tei:noteGrp/tei:note[@type = 'mentions']">
+            <xsl:if test="./tei:listBibl/tei:bibl">
+                <dt>Erscheinungsort von</dt>
+                <xsl:for-each select="./tei:listBibl/tei:bibl[@corresp]">
                     <dd>
-                        <a href="{replace(@target, '.xml', '.html')}">
-                            <xsl:value-of select="./text()"/>
+                        <a href="{replace(@corresp, '#', '')||'.html'}">
+                            <xsl:value-of select="./@n"/>
                         </a>
                     </dd>
                 </xsl:for-each>
