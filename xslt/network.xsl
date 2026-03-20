@@ -45,7 +45,14 @@
                         <h1>
                             <xsl:value-of select="$doc_title"/>
                         </h1>
-                       <div id="visContainer"/>
+                       <div class="row">
+                           <div class="col-md-10">
+                               <div id="visContainer"/>
+                           </div>
+                           <div class="col-md-2" id="legendDiv">
+                               <h2 class="pt-2 text-center">Legende</h2>
+                           </div>
+                       </div>
                        <div class="text-center p-4">
                             <xsl:call-template name="blockquote">
                                 <xsl:with-param name="pageId" select="'network.html'"/>
