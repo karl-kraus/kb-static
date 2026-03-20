@@ -19,9 +19,6 @@ export default defineConfig({
   server: {
     port: 5173,
     strictPort: true,
-    fs: {
-      allow: ['..'] // allow access to src outside html/
-    }
   },
   build: {
     outDir: 'assets',
