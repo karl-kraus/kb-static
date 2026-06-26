@@ -47,6 +47,11 @@ except ObjectNotFound:
 current_schema = {
     "name": COLLECTION_NAME,
     "enable_nested_fields": True,
+    "metadata": {
+        "owners": ["Peter Andorfer", "Bernhard Oberreither"],
+        "description": "https://github.com/karl-kraus/kb-static",
+        "service_ids": [26461],
+    },
     "fields": [
         {"name": "id", "type": "string"},
         {"name": "rec_id", "type": "string", "sort": True},
