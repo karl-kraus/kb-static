@@ -58,7 +58,7 @@ def generate_quote(bibl: ET.Element) -> str:
             return names[0]
         if len(names) == 2:
             return f"{names[0]} and {names[1]}"
-        return ", ".join(names[:-1]) + ", and " + names[-1]
+        return f"{', '.join(names[:-1])}, und {names[-1]}"
 
     authors = join_names(bibl.xpath(".//tei:author", namespaces=NSMAP))
     editors = join_names(bibl.xpath(".//tei:editor", namespaces=NSMAP))
@@ -146,7 +146,7 @@ def generate_quote(bibl: ET.Element) -> str:
         citation += f'"{title_a}." In: {title_full}.'
 
         if editors:
-            citation += f" Hrsg. v. {editors}"
+            citation += f" Hrsg. v. {editors}."
 
         pub = ""
 
