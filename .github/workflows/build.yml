@@ -36,9 +36,9 @@ jobs:
       PRODUCTION: true
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
       - name: Install the latest version of uv
-        uses: astral-sh/setup-uv@v7 
+        uses: astral-sh/setup-uv@v8.3.0 
       - name: Fetch the data
         run: ./shellscripts/fetch_data.sh
       - name: process the data
@@ -56,12 +56,12 @@ jobs:
       - name: Build JS assets
         run: npm run build
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           # Upload entire repository
           path: './html'
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
