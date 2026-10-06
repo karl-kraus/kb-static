@@ -91,13 +91,13 @@
                                     <xsl:for-each-group
                                         select=".//tei:body//tei:bibl[./tei:num[@type = 'category']]"
                                         group-by="./tei:num[@type = 'category']">
-                                        <h2 class="text-center">
+                                        <h2 class="text-center" id="{current-grouping-key()}">
                                             <xsl:value-of select="current-grouping-key()"/> –
                                                 <xsl:value-of
                                                 select="current-group()[1]/tei:note[@type = 'category']"
                                             /></h2>
                                         <xsl:for-each select="current-group()">
-                                            <h3 class="fs-4">
+                                            <h3 class="fs-4" id="{@xml:id}">
                                                 <xsl:value-of select="@n"/>
                                             </h3>
                                             <dl>
@@ -106,16 +106,19 @@
                                                   <xsl:apply-templates
                                                   select="./tei:note[@type = 'comment']"/>
                                                 </dd>
+                                                <dt>KAB-Nummer</dt>
+                                                <dd><a href="{@xml:id||'.html'}"><xsl:value-of select="@xml:id"/></a></dd>
                                             </dl>
                                         </xsl:for-each>
-
-                                        <h4 class="text-center">Außerdem</h4>
-                                        <xsl:for-each
-                                            select="//tei:body/tei:note[@corresp = current-grouping-key()]">
-                                            <p>
-                                                <xsl:apply-templates/>
-                                            </p>
-                                        </xsl:for-each>
+                                        <xsl:if test="//tei:body/tei:note[@corresp = current-grouping-key()]">
+                                            <h4 class="text-center pt-3">Außerdem</h4>
+                                            <xsl:for-each
+                                                select="//tei:body/tei:note[@corresp = current-grouping-key()]">
+                                                <p>
+                                                    <xsl:apply-templates/>
+                                                </p>
+                                            </xsl:for-each>
+                                        </xsl:if>
                                         <hr/>
                                     </xsl:for-each-group>
                                 </div>

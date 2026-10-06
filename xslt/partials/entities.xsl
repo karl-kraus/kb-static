@@ -8,7 +8,9 @@
                 <dl>
                     <dt>Kategorie</dt>
                     <dd>
-                        <xsl:value-of select="./tei:note[@type='category']/text()"/>
+                        <a href="{'bibliographie.html#'||./tei:num[@type='category']/text()}">
+                            <xsl:value-of select="./tei:note[@type='category']/text()"/>
+                        </a>
                     </dd>
                     <dt>KAB-Nummer</dt>
                     <dd>

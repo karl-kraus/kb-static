@@ -16,7 +16,8 @@ doc = TeiReader(listbibl_file)
 for x in doc.any_xpath(".//tei:bibl[@xml:id]"):
     xml_id = get_xmlid(x)
     save_path = os.path.join(out_dir, f"{xml_id}.xml")
-    tei_doc = TeiReader(dummy_entry)
+    fixed_dummy_entry = dummy_entry.replace("listperson", xml_id)
+    tei_doc = TeiReader(fixed_dummy_entry)
     title = tei_doc.any_xpath(".//tei:titleStmt/tei:title[@level='a']")[0]
     title.text = x.attrib["n"]
     listbibl = tei_doc.any_xpath(".//tei:listBibl")[0]
