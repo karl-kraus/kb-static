@@ -9,11 +9,10 @@
     <xsl:import href="./partials/html_navbar.xsl"/>
     <xsl:import href="./partials/html_head.xsl"/>
     <xsl:import href="./partials/html_footer.xsl"/>
-    <xsl:import href="./partials/tabulator_dl_buttons.xsl"/>
-    <xsl:import href="./partials/tabulator_js.xsl"/>
     <xsl:import href="./partials/entities.xsl"/>
     <xsl:import href="./partials/blockquote.xsl"/>
     <xsl:import href="./partials/zotero.xsl"/>
+    <xsl:import href="./partials/datatables_import.xsl"/>
     <xsl:output encoding="UTF-8" media-type="text/html" method="html" version="5.0" indent="yes" omit-xml-declaration="yes"/>
 
     <xsl:template match="/">
@@ -31,6 +30,7 @@
                     <xsl:with-param name="pageId" select="$link"></xsl:with-param>
                     <xsl:with-param name="zoteroTitle" select="$doc_title"></xsl:with-param>
                 </xsl:call-template>
+                <xsl:call-template name="datatables_import"/>
             </head>
             
             <body class="d-flex flex-column h-100">
@@ -50,15 +50,14 @@
                     </nav>
                     <div class="container">                        
                         <h1 class="display-5 text-center"><xsl:value-of select="$doc_title"/></h1>
-                        <div class="text-center p-1"><span id="counter1"></span> von <span id="counter2"></span> Personen</div>
+                        <div id="custom-info-box" class="text-muted small text-center"></div>
                         
-                        <table id="myTable">
+                        <table id="myTable" class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th scope="col" tabulator-headerFilter="input" tabulator-formatter="html" tabulator-download="false" tabulator-minWidth="350">Name</th>
-                                    <th scope="col" tabulator-visible="false" tabulator-download="true">name_</th>
-                                    <th scope="col" tabulator-download="true" tabulator-headerFilter="number">Werke</th>
-                                    <th scope="col" tabulator-visible="false" tabulator-headerFilter="input" tabulator-download="true">ID</th>
+                                    <th scope="col" >Name</th>
+                                    <th scope="col" >Werke</th>
+                                    <th scope="col" data-dt-visible="false">ID</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -79,9 +78,6 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <xsl:value-of select="$label"/>
-                                        </td>
-                                        <td>
                                             <xsl:choose>
                                                 <xsl:when test="./tei:listBibl/@n">
                                                     <xsl:value-of select="./tei:listBibl/@n"/>
@@ -97,7 +93,6 @@
                                 </xsl:for-each>
                             </tbody>
                         </table>
-                        <xsl:call-template name="tabulator_dl_buttons"/>
                         
                         <div class="text-center p-4">
                             <xsl:call-template name="blockquote">
@@ -107,7 +102,7 @@
                     </div>
                 </main>
                 <xsl:call-template name="html_footer"/>
-                <xsl:call-template name="tabulator_js"/>
+                <script src="js/datatables_custom/datatables_custom.js"></script>
             </body>
         </html>
 
