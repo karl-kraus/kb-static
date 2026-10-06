@@ -6,21 +6,19 @@
     version="2.0"
     exclude-result-prefixes="xsl tei xs">
     
-
     <xsl:import href="./partials/html_navbar.xsl"/>
     <xsl:import href="./partials/html_head.xsl"/>
     <xsl:import href="./partials/html_footer.xsl"/>
-    <xsl:import href="./partials/tabulator_dl_buttons.xsl"/>
-    <xsl:import href="./partials/tabulator_js.xsl"/>
     <xsl:import href="./partials/entities.xsl"/>
     <xsl:import href="./partials/blockquote.xsl"/>
     <xsl:import href="./partials/zotero.xsl"/>
+    <xsl:import href="./partials/datatables_import.xsl"/>
     <xsl:output encoding="UTF-8" media-type="text/html" method="html" version="5.0" indent="yes" omit-xml-declaration="yes"/>
 
 
     <xsl:template match="/">
         <xsl:variable name="doc_title">
-            <xsl:value-of select=".//tei:titleStmt/tei:title[1]/text()"/>
+            <xsl:value-of select=".//tei:titleStmt/tei:title[@level='a']/text()"/>
         </xsl:variable>
         <xsl:variable name="link" select="'listplace.html'"/>
         <html class="h-100" lang="{$default_lang}">
@@ -32,7 +30,7 @@
                     <xsl:with-param name="pageId" select="$link"></xsl:with-param>
                     <xsl:with-param name="zoteroTitle" select="$doc_title"></xsl:with-param>
                 </xsl:call-template>
-                <link href="vendor/tabulator-tables/css/tabulator_bootstrap5.min.css" rel="stylesheet"/>
+                <xsl:call-template name="datatables_import"/>
                 <link rel="stylesheet" href="vendor/leaflet/leaflet.css"/>
                 <script src="vendor/leaflet/leaflet.js"/>
                 <link rel="stylesheet"
@@ -44,7 +42,7 @@
             
             <body class="d-flex flex-column h-100">
                 <xsl:call-template name="nav_bar"/>
-                <main class="flex-shrink-0 flex-grow-1">
+                <main id="main" tabindex="-1" class="flex-shrink-0 flex-grow-1">
                     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="ps-5 p-3">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
@@ -58,16 +56,19 @@
                         </ol>
                     </nav>
                     <div class="container">
-                        <h1><xsl:value-of select="$doc_title"/></h1>
-                        <div id="map"/>
-                        <table id="placesTable">
+                        <h1>
+                            <xsl:value-of select="$doc_title"/>
+                        </h1>
+                        <div id="map"></div>
+                        <div id="custom-info-box" class="text-muted small text-center"></div>
+                        <table id="myTable" class="table table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col">Ortsname</th>
                                     <th scope="col">Erwähnungen</th>
                                     <th scope="col">lat</th>
                                     <th scope="col">lng</th>
-                                    <th scope="col">linkToEntity</th>
+                                    <th scope="col" data-dt-visible="false">ID</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -77,7 +78,9 @@
                                     </xsl:variable>
                                     <tr>
                                         <td>
-                                            <xsl:value-of select="./tei:placeName[1]/text()"/>
+                                            <a href="{$id||'.html'}">
+                                                <xsl:value-of select=".//tei:placeName[1]"/>
+                                            </a>
                                         </td>
                                         <td>
                                             <xsl:value-of select="count(.//tei:note[@type='mentions'])"/>
@@ -103,7 +106,6 @@
                                 </xsl:for-each>
                             </tbody>
                         </table>
-                        <xsl:call-template name="tabulator_dl_buttons"/>
                         <div class="text-center p-4">
                             <xsl:call-template name="blockquote">
                                 <xsl:with-param name="pageId" select="'listplace.html'"/>
@@ -112,14 +114,8 @@
                     </div>
                 </main>
                 <xsl:call-template name="html_footer"/>
-                <script type="text/javascript" src="vendor/tabulator-tables/js/tabulator.min.js"/>
-                <script src="js/map_table_cfg.js"/>
-                <script src="js/make_map_and_table.js"/>
-                
-                <script>
-                    build_map_and_table(map_cfg, table_cfg, wms_cfg=null, tms_cfg=tms_cfg);                   
-                </script>
-                
+                <script src="js/datatables_custom/datatables_custom.js"></script>
+                <script src="js/maptable.js"></script>
             </body>
         </html>
         <xsl:for-each select=".//tei:place[@xml:id]">
@@ -139,7 +135,7 @@
 
                     <body class="d-flex flex-column h-100">
                         <xsl:call-template name="nav_bar"/>
-                        <main class="flex-shrink-0 flex-grow-1">
+                        <main id="main" tabindex="-1" class="flex-shrink-0 flex-grow-1">
                             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="ps-5 p-3">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item">
