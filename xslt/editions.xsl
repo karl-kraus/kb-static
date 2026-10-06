@@ -83,6 +83,7 @@
                                         title="page navigation"/>
                                 </details>
                                 <nav id="toc" data-toggle="toc" class="sticky-top d-none d-md-block"
+                                    style="max-height: calc(100vh - 2rem); overflow-y: auto;"
                                     title="page navigation"/>
                             </div>
                             <div class="col-md-9">
