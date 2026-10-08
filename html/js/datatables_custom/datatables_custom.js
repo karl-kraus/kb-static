@@ -25,7 +25,9 @@ document.querySelectorAll('#myTable thead th').forEach((th, index) => {
     if (th.dataset.dtSearchlist === 'true') {
         sortContent.push({
             extend: 'dropdown',
-            icon: 'menu',
+            icon: 'search',
+            iconActive: 'searchActive',
+            className: 'searchlist',
             text: `Werte auswählen: ${label}`,
             content: [{ extend: 'searchList', options: countOptions(index) }]
         });
@@ -84,7 +86,10 @@ const table = new DataTable('#myTable', {
     initComplete: function () {
         updateInfo(this.api());
         // ColumnControl builds its search-row DOM asynchronously after initComplete fires
-        setTimeout(labelSearchLogicSelects, 0);
+        setTimeout(() => {
+            labelSearchLogicSelects();
+            addSearchListTooltips();
+        }, 0);
     },
 
     columns: columns,
@@ -115,6 +120,13 @@ function updateInfo(table) {
 
     document.querySelector('#custom-info-box').textContent =
         `${info.recordsDisplay} von ${info.recordsTotal} Einträgen`;
+}
+
+// ColumnControl has no tooltip option for buttons
+function addSearchListTooltips() {
+    document.querySelectorAll('#myTable thead .dtcc-button_searchlist').forEach((button) => {
+        button.title = 'Liste aller Werte öffnen und nach Werten filtern';
+    });
 }
 
 // ColumnControl renders the search-logic <select> without an accessible name
