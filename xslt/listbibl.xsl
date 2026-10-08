@@ -56,10 +56,10 @@
                             <thead>
                                 <tr>
                                     <th scope="col" >Titel</th>
-                                    <th scope="col" >Autor</th>
+                                    <th scope="col" data-dt-searchlist="true" >Autor</th>
                                     <th scope="col" >Datum</th>
-                                    <th scope="col" >Ort</th>
-                                    <th scope="col" >Kategorie</th>
+                                    <th scope="col" data-dt-searchlist="true">Ort</th>
+                                    <th scope="col" data-dt-searchlist="true" >Kategorie</th>
                                     <th scope="col" data-dt-visible="false">ID</th>
                                 </tr>
                             </thead>

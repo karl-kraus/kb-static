@@ -1,7 +1,35 @@
 const columns = [];
 
-document.querySelectorAll('#myTable thead th').forEach((th) => {
+// Unique cell values of a column with their row counts, as searchList options
+function countOptions(index) {
+    const counts = new Map();
+
+    document.querySelectorAll(`#myTable tbody tr td:nth-child(${index + 1})`).forEach((td) => {
+        const value = td.textContent.trim();
+
+        if (value) {
+            counts.set(value, (counts.get(value) || 0) + 1);
+        }
+    });
+
+    return [...counts]
+        .sort(([a, countA], [b, countB]) => countB - countA || a.localeCompare(b, 'de'))
+        .map(([value, count]) => ({ label: `${value} (${count})`, value }));
+}
+
+document.querySelectorAll('#myTable thead th').forEach((th, index) => {
     const label = th.textContent.trim();
+
+    const sortContent = ['orderStatus'];
+
+    if (th.dataset.dtSearchlist === 'true') {
+        sortContent.push({
+            extend: 'dropdown',
+            icon: 'menu',
+            text: `Werte auswählen: ${label}`,
+            content: [{ extend: 'searchList', options: countOptions(index) }]
+        });
+    }
 
     columns.push({
         data: th.textContent.trim().toLowerCase(),
@@ -9,7 +37,7 @@ document.querySelectorAll('#myTable thead th').forEach((th) => {
         columnControl: [
             {
                 target: 0,
-                content: ['orderStatus']
+                content: sortContent
             },
             {
                 target: 1,
