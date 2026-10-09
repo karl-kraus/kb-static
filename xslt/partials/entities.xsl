@@ -14,7 +14,10 @@
                     </dd>
                     <dt>KAB-Nummer</dt>
                     <dd>
-                        <xsl:value-of select="./tei:num[@type='id']/text()"/>
+                        <a href="{'bibliographie.html#'||./@xml:id}">
+                            <xsl:value-of select="./tei:num[@type='id']/text()"/>
+                        </a>
+                        
                     </dd>
                     <xsl:if test="./tei:author">
                         <dt>Autor*innen</dt>
