@@ -39,6 +39,11 @@
                 <link rel="stylesheet"
                     href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"
                 />
+                <style>
+                    nav.js-toc .nav-link + ul {
+                        display: block;
+                    }
+                </style>
             </head>
             <body class="d-flex flex-column h-100" data-bs-spy="scroll" data-bs-target="#toc">
                 <xsl:call-template name="nav_bar"/>
@@ -60,7 +65,7 @@
                         <div class="row">
                             <div class="col-md-2 col-lg-2 col-sm-12 text-start"> </div>
                             <div class="col-md-8 col-lg-8 col-sm-12 text-center">
-                                <h1>
+                                <h1 data-toc-skip="true">
                                     <xsl:value-of select="$doc_title"/>
                                 </h1>
                                 <div>
@@ -79,48 +84,51 @@
                             <div class="col-md-3">
                                 <details class="d-md-none mb-3 toc-details">
                                     <summary>Table of Contents</summary>
-                                    <nav id="toc" data-toggle="toc" class="sticky-top"
+                                    <nav id="toc" class="js-toc sticky-top"
                                         title="page navigation"/>
                                 </details>
-                                <nav id="toc" data-toggle="toc" class="sticky-top d-none d-md-block"
+                                <nav id="toc" class="js-toc sticky-top d-none d-md-block"
                                     style="max-height: calc(100vh - 2rem); overflow-y: auto;"
                                     title="page navigation"/>
                             </div>
                             <div class="col-md-9">
-                                <div class="pb-3">
-                                    <xsl:for-each-group
-                                        select=".//tei:body//tei:bibl[./tei:num[@type = 'category']]"
-                                        group-by="./tei:num[@type = 'category']">
-                                        <h2 class="text-center" id="{current-grouping-key()}">
-                                            <xsl:value-of select="current-grouping-key()"/> –
-                                                <xsl:value-of
-                                                select="current-group()[1]/tei:note[@type = 'category']"
-                                            /></h2>
-                                        <xsl:for-each select="current-group()">
-                                            <h3 class="fs-4" id="{@xml:id}">
+                                <div class="pb-3" id="toc-content">
+                                    <xsl:for-each select=".//tei:body/tei:desc">
+                                        <xsl:variable name="category">
+                                            <xsl:value-of select="tokenize(@corresp)[1]"/>
+                                        </xsl:variable>
+                                        <xsl:choose>
+                                            <xsl:when test="@type='chapter'">
+                                                <h2 id="{$category}"><xsl:value-of select="$category"/> – <xsl:value-of select="./text()"/></h2>
+                                            </xsl:when>
+                                            <xsl:when test="@type='subchapter'">
+                                                <h3 id="{$category}"><xsl:value-of select="$category"/> – <xsl:value-of select="./text()"/></h3>
+                                            </xsl:when>
+                                        </xsl:choose>
+                                        <xsl:for-each select="//tei:body//tei:bibl[./tei:num[@type='category']/text() eq $category]">
+                                            <h4 class="fs-4" id="{@xml:id}">
                                                 <xsl:value-of select="@n"/>
-                                            </h3>
+                                            </h4>
                                             <dl>
                                                 <dt>Kommentar</dt>
                                                 <dd>
-                                                  <xsl:apply-templates
-                                                  select="./tei:note[@type = 'comment']"/>
+                                                    <xsl:apply-templates
+                                                        select="./tei:note[@type = 'comment']"/>
                                                 </dd>
                                                 <dt>KAB-Nummer</dt>
                                                 <dd><a href="{@xml:id||'.html'}"><xsl:value-of select="@xml:id"/></a></dd>
                                             </dl>
                                         </xsl:for-each>
-                                        <xsl:if test="//tei:body/tei:note[@corresp = current-grouping-key()]">
+                                        <xsl:if test="//tei:body/tei:note[@corresp = $category]">
                                             <h4 class="text-center pt-3">Außerdem</h4>
                                             <xsl:for-each
-                                                select="//tei:body/tei:note[@corresp = current-grouping-key()]">
+                                                select="//tei:body/tei:note[@corresp = $category]">
                                                 <p>
                                                     <xsl:apply-templates/>
                                                 </p>
                                             </xsl:for-each>
                                         </xsl:if>
-                                        <hr/>
-                                    </xsl:for-each-group>
+                                    </xsl:for-each>
                                 </div>
                                 
                             </div>
@@ -139,6 +147,16 @@
                 </main>
                 <xsl:call-template name="html_footer"/>
                 <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"/>
+                <script>
+                    $(function () {
+    $("nav[id='toc']").each(function () {
+    Toc.init({
+      $nav: $(this),
+      $scope: $("#toc-content")
+    });
+  });
+});
+                </script>
             </body>
         </html>
     </xsl:template>
