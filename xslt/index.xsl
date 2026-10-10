@@ -50,15 +50,15 @@
                                   <a href="listbibl.html" type="button" class="btn btn-outline-primary btn-lg px-4">Alle Einträge</a>
                               </div>
                            </div>
-                            <!--<div class="col-10 col-sm-8 col-lg-6">
+                            <div class="col-10 col-sm-8 col-lg-6">
                                 <figure class="figure">
                                     <img src="images/title-image.jpg"
                                         class="d-block mx-lg-auto img-fluid"
-                                        alt=" Lajos Tihanyi, Porträt Karl Kraus 1925" width="400" height="600"
+                                        alt="Porträt Karl Kraus" width="400" height="600"
                                         loading="lazy"/>
-                                    <figcaption class="pt-3 figure-caption">Lajos Tihanyi, Porträt Karl Kraus 1925, Public domain, via <a href="">Wikimedia Commons</a></figcaption>
+                                    <figcaption class="pt-3 figure-caption">Public domain, via Wikimedia Commons <a href="https://commons.wikimedia.org/wiki/File:Karl_Kraus.jpg">Wikimedia Commons</a></figcaption>
                                 </figure>
-                            </div>-->
+                            </div>
                         </div>
                         <div class="text-center p-4">
                             <xsl:call-template name="blockquote"/>

@@ -48,20 +48,13 @@
                                     </li>
                                 </ul>
                             </li>
-                            <!-- <li class="nav-item">
-                                <a title="API" class="nav-link" href="api.xml">API</a>
-                            </li> -->
                             <li class="nav-item">
-                                <a title="Suche" class="nav-link" href="search.html">Suche</a>
-                            </li>
-
-                             <li class="nav-item">
                                 <a class="nav-link" href="charts.html">Charts</a>
                             </li>
                         </ul>
                         <form class="d-flex" role="search" method="GET" action="search.html">
                             <input class="form-control me-2" type="search" placeholder="Suche" aria-label="Suche" name="kb-static[query]"></input>
-                            <button class="btn btn-primary" type="submit">Search</button>
+                            <button class="btn btn-primary" type="submit">Suche</button>
                         </form>
                     </div>
                 </div>
