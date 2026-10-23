@@ -60,9 +60,12 @@ for bad in doc.any_xpath(".//tei:place[@xml:id]//tei:listBibl"):
     bad.getparent().remove(bad)
 
 for x in doc.any_xpath(".//tei:place[@xml:id]"):
-    x.attrib["n"] = make_entity_label(x.xpath("./tei:placeName", namespaces=NSMAP)[0])[
-        0
-    ]
+    try:
+        x.attrib["n"] = make_entity_label(
+            x.xpath("./tei:placeName", namespaces=NSMAP)[0]
+        )[0]
+    except IndexError:
+        x.attrib["n"] = "fooo"
     xml_id = get_xmlid(x)
     bibls = bibl_lookup[xml_id]
     if bibls:

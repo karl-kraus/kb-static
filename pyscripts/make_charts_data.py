@@ -2,7 +2,7 @@ import json
 import os
 
 from acdh_tei_pyutils.tei import TeiReader
-from acdh_tei_pyutils.utils import any_xpath
+from acdh_tei_pyutils.utils import any_xpath, make_entity_label
 from config import HTML_DATA_DIR, LISTBIBL, LISTPERSON, LISTPLACE
 from utils import listorg_file as LISTORG
 
@@ -47,7 +47,12 @@ print(f"generating {output_file}")
 doc = TeiReader(LISTPLACE)
 data = {}
 for x in doc.any_xpath(".//tei:place[@xml:id]"):
-    label = x.attrib["n"]
+    try:
+        label = x.attrib["n"]
+    except (KeyError, IndexError):
+        node = any_xpath(x, "./tei:placeName")[0]
+        label = make_entity_label(node)[0]
+
     try:
         works_written = int(any_xpath(x, "./tei:listBibl[@n]/@n")[0])
     except IndexError:
