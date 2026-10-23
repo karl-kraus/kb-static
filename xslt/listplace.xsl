@@ -83,7 +83,7 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <xsl:value-of select="count(.//tei:note[@type='mentions'])"/>
+                                            <xsl:value-of select="data(.//tei:listBibl[1]/@n)"/>
                                         </td>
                                         <td>
                                             <xsl:choose>
