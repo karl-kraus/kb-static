@@ -1,6 +1,243 @@
-:root {
-  --bs-link-color-rgb: 13, 17, 253;
-  --bs-link-color: rgb(13, 17, 253);
+/* ---- Design tokens: warm "paper & ink" palette with a single oxblood accent ---- */
+/* [data-bs-theme=light] matches Bootstrap's own selector specificity */
+:root,
+[data-bs-theme=light] {
+  --kb-ink: #1f1b16;
+  --kb-paper: #faf7f2;
+  --kb-paper-dark: #f0eae0;
+  --kb-rule: #d9d0c1;
+  --kb-accent: #7a1f2b;
+  --kb-accent-dark: #5a1620;
+  --kb-muted: #6b6257;
+  --kb-font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+
+  --bs-body-bg: var(--kb-paper);
+  --bs-body-color: var(--kb-ink);
+  --bs-body-font-family: var(--kb-font-serif);
+  --bs-body-font-size: 1.075rem;
+  --bs-body-line-height: 1.65;
+  --bs-secondary-color: var(--kb-muted);
+  --bs-tertiary-bg: var(--kb-paper-dark);
+  --bs-border-color: var(--kb-rule);
+  --bs-link-color: var(--kb-accent);
+  --bs-link-color-rgb: 122, 31, 43;
+  --bs-link-hover-color: var(--kb-accent-dark);
+  --bs-link-hover-color-rgb: 90, 22, 32;
+  --bs-primary: var(--kb-accent);
+  --bs-primary-rgb: 122, 31, 43;
+  --bs-border-radius: 0.2rem;
+  --bs-border-radius-lg: 0.3rem;
+  --bs-focus-ring-color: rgba(122, 31, 43, 0.25);
+}
+
+h1, h2, h3, h4, h5, h6,
+.navbar-brand,
+.breadcrumb {
+  font-family: var(--kb-font-serif);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.25;
+}
+
+h2, h3 {
+  margin-top: 1.75em;
+}
+
+h2 {
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--kb-rule);
+}
+
+a {
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+
+::selection {
+  background: rgba(122, 31, 43, 0.18);
+}
+
+/* ---- Navbar ---- */
+.navbar {
+  background: var(--kb-paper) !important;
+  border-bottom: 1px solid var(--kb-rule);
+  padding-block: 0.6rem;
+}
+
+.navbar-brand {
+  font-variant: small-caps;
+  font-size: 1.35rem;
+  color: var(--kb-accent);
+}
+
+.navbar .nav-link {
+  font-variant: small-caps;
+  letter-spacing: 0.05em;
+  font-size: 1.05rem;
+  color: var(--kb-ink);
+  border-bottom: 2px solid transparent;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus,
+.navbar .nav-link.show {
+  color: var(--kb-accent);
+  border-bottom-color: var(--kb-accent);
+}
+
+.dropdown-menu {
+  background: var(--kb-paper);
+  border-color: var(--kb-rule);
+  box-shadow: 0 0.5rem 1.25rem rgba(31, 27, 22, 0.1);
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background: var(--kb-paper-dark);
+  color: var(--kb-accent);
+}
+
+/* ---- Buttons & forms ---- */
+.btn {
+  letter-spacing: 0.04em;
+  border-radius: 0.2rem;
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--kb-accent);
+  --bs-btn-border-color: var(--kb-accent);
+  --bs-btn-hover-bg: var(--kb-accent-dark);
+  --bs-btn-hover-border-color: var(--kb-accent-dark);
+  --bs-btn-active-bg: var(--kb-accent-dark);
+  --bs-btn-active-border-color: var(--kb-accent-dark);
+  --bs-btn-disabled-bg: var(--kb-accent);
+  --bs-btn-disabled-border-color: var(--kb-accent);
+}
+
+.btn-outline-primary {
+  --bs-btn-color: var(--kb-accent);
+  --bs-btn-border-color: var(--kb-accent);
+  --bs-btn-hover-bg: var(--kb-accent);
+  --bs-btn-hover-border-color: var(--kb-accent);
+  --bs-btn-active-bg: var(--kb-accent-dark);
+  --bs-btn-active-border-color: var(--kb-accent-dark);
+}
+
+/* Form control borders need >= 3:1 contrast (WCAG 1.4.11); --kb-rule is decorative only */
+.form-control {
+  background: #fff;
+  border-color: #8a8073;
+}
+
+.navbar-toggler {
+  border-color: #8a8073;
+}
+
+.form-control:focus {
+  border-color: var(--kb-accent);
+}
+
+/* ---- Content ---- */
+main {
+  font-feature-settings: "liga", "onum";
+}
+
+main .container {
+  max-width: 1100px;
+}
+
+.display-4 {
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--kb-ink);
+}
+
+.lead {
+  font-weight: 400;
+  color: var(--kb-muted);
+}
+
+blockquote,
+.blockquote {
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--kb-muted);
+  border-inline: 0;
+  position: relative;
+}
+
+.blockquote-footer,
+figcaption {
+  font-size: 0.85rem;
+  color: var(--kb-muted);
+}
+
+.figure-img,
+main figure img {
+  filter: grayscale(1) sepia(0.2);
+  border: 1px solid var(--kb-rule);
+  padding: 0.5rem;
+  background: #fff;
+  box-shadow: 0 0.75rem 2rem rgba(31, 27, 22, 0.15);
+}
+
+.alert {
+  border-radius: 0.2rem;
+  border-width: 0 0 0 3px;
+  font-size: 0.95rem;
+}
+
+.alert-warning {
+  background: #f6efdc;
+  border-color: #b8923a;
+  color: #4a3a12;
+}
+
+.breadcrumb {
+  font-size: 0.95rem;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  color: var(--kb-muted);
+}
+
+/* Bibliography entries: restrained hanging-indent rhythm */
+main li,
+main dd {
+  margin-bottom: 0.35rem;
+}
+
+hr {
+  color: var(--kb-rule);
+  opacity: 1;
+}
+
+.table {
+  --bs-table-bg: transparent;
+  --bs-table-striped-bg: rgba(240, 234, 224, 0.6);
+  --bs-table-border-color: var(--kb-rule);
+}
+
+.page-link {
+  color: var(--kb-accent);
+}
+
+.page-item.active .page-link {
+  background: var(--kb-accent);
+  border-color: var(--kb-accent);
+}
+
+/* ---- Footer ---- */
+footer {
+  background: var(--kb-paper-dark) !important;
+  border-top: 1px solid var(--kb-rule);
+  color: var(--kb-muted);
+  font-size: 0.9rem;
+}
+
+footer .footer-logo {
+  filter: grayscale(1);
+  opacity: 0.8;
 }
 
 /* needed for interactive map in listplace.xsl */
@@ -11,7 +248,7 @@ div#map {
 /* Match bootstrap navlink focus outline color. */
 :focus-visible {
   outline: 0;
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  box-shadow: 0 0 0 0.25rem rgba(122, 31, 43, 0.25);
 }
 
 
