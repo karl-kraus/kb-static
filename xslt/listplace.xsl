@@ -131,6 +131,7 @@
                             <xsl:with-param name="pageId" select="$filename"></xsl:with-param>
                             <xsl:with-param name="zoteroTitle" select="$name"></xsl:with-param>
                         </xsl:call-template>
+                        
                     </head>
 
                     <body class="d-flex flex-column h-100">
@@ -150,10 +151,14 @@
                                 <h1>
                                     <xsl:value-of select="$name"/>
                                 </h1>
-                                <xsl:call-template name="place_detail"/>
-                                <xsl:if test="./tei:location/tei:geo">
-                                    <div id="map_detail"/>
-                                </xsl:if>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <xsl:call-template name="place_detail"/>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div id="map_detail" style="height:500px;"/>
+                                    </div>
+                                </div>
                                 <div class="text-center p-4">
                                     <xsl:call-template name="blockquote">
                                         <xsl:with-param name="pageId" select="$filename"/>
@@ -168,7 +173,6 @@
                             <script>
                                 var lat = <xsl:value-of select="replace(tokenize(./tei:location[1]/tei:geo[1]/text(), ' ')[1], ',', '.')"/>;
                                 var long = <xsl:value-of select="replace(tokenize(./tei:location[1]/tei:geo[1]/text(), ' ')[2], ',', '.')"/>;
-                                $("#map_detail").css("height", "500px");
                                 var map = L.map('map_detail').setView([Number(lat), Number(long)], 13);
                                 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                                 maxZoom: 19,
