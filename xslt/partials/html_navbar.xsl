@@ -48,8 +48,19 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="charts.html">Charts</a>
+                            <li class="nav-item dropdown disabled">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Visualisierungen</a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" href="charts.html">Charts</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="wc-titles.html">Wortwolke</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="network.html">Netzwerk</a>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                         <form class="d-flex" role="search" method="GET" action="search.html">
