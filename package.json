@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "chart.js": "^4.5.1",
+    "chartjs-chart-wordcloud": "^4.4.5",
     "chartjs-plugin-zoom": "^2.2.0",
     "graphology": "^0.26.0",
     "graphology-layout-forceatlas2": "^0.10.1",
