@@ -6,3 +6,4 @@ uv run pyscripts/split_to_files.py
 uv run pyscripts/bibl_to_the_people.py
 uv run pyscripts/make_charts_data.py 
 uv run pyscripts/make_network.py
+uv run pyscripts/make_wc_data.py
