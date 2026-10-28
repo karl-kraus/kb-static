@@ -137,6 +137,11 @@ a {
   border-color: var(--kb-accent);
 }
 
+.form-check-input:checked {
+	background-color: var(--kb-accent);
+	border-color: var(--kb-accent);
+}
+
 /* ---- Content ---- */
 main {
   font-feature-settings: "liga", "onum";
