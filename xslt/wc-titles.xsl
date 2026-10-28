@@ -15,7 +15,7 @@
     <xsl:param name="production"></xsl:param>
 
     <xsl:template match="/">
-        <xsl:variable name="doc_title" select="'Wortwolke (Titel)'"/>
+        <xsl:variable name="doc_title" select="'Worthäufigkeiten'"/>
         <html class="h-100" lang="{$default_lang}">
             <head>
                 <xsl:call-template name="html_head">
@@ -42,10 +42,11 @@
                         </ol>
                     </nav>
                     <div class="container">                        
-                        <h1>
+                        <h1 class="text-center">
                             <xsl:value-of select="$doc_title"/>
                         </h1>
                         <div id="visContainer"/>
+                        <p class="lead">Die Wortwolke zeigt die am häufigsten vorkommenden Wörter – entweder in den vollständigen bibliografischen Angaben oder ausschließlich in den Titeln der Aufsätze, Beiträge und Monografien. Häufige Wörter wie »der«, »die«, »das« und »und« sowie die Namen »Karl« und »Kraus« werden dabei nicht berücksichtigt. Eine vollständige Liste der ausgeschlossenen Wörter findet sich in der <a href="https://github.com/karl-kraus/kb-static/blob/main/pyscripts/config.py">Stoppwortliste</a>.</p>
                    </div>
                    <div class="text-center p-4">
                         <xsl:call-template name="blockquote">

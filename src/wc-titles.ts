@@ -15,15 +15,15 @@ container.style.minHeight = '600px';
 container.style.position = 'relative';
 
 const sourceControls = document.createElement('fieldset');
-sourceControls.className = 'mb-3';
-const legend = document.createElement('legend');
-legend.className = 'fs-5';
+sourceControls.className = 'mb-3 text-center';
+const legend = document.createElement('h2');
+legend.className = 'text-center mt-1';
 legend.textContent = 'Datenquelle';
 sourceControls.append(legend);
 
 const dataSources: Array<{ value: DataSource; label: string }> = [
-    { value: 'full_titles', label: 'Vollständige Titel' },
-    { value: 'titles', label: 'Titel' },
+    { value: 'full_titles', label: 'Vollständige bibliographische Angabe' },
+    { value: 'titles', label: 'Titel (Aufsatz, Monographie' },
 ];
 const sourceInputs: HTMLInputElement[] = [];
 dataSources.forEach(({ value, label }, index) => {
