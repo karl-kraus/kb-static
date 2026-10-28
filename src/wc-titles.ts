@@ -73,6 +73,14 @@ function renderWordCloud(source: DataSource): void {
             ],
         },
         options: {
+            onClick: (event, elements, chart) => {
+            if (!elements.length) return;
+
+            const index = elements[0].index;
+            const word = chart.data.labels[index];
+
+            window.location.href = `search.html?kb-static[query]=${encodeURIComponent(word)}`;
+        },
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
