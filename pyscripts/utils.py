@@ -46,22 +46,44 @@ def generate_quote(bibl: ET.Element) -> str:
         t = re.sub(r"\s+", " ", t)
         return t.strip()
 
+    # Platzhalter für "und weitere": stehen als eigenes author/editor-Element in den
+    # Daten und werden ohne "und" an die Namensliste angehängt.
+    others_markers = {"u. a.", "u.a.", "et al.", "et al"}
+
     def join_names(nodes):
-        names = [
-            clean_text("".join(n.itertext()))
-            for n in nodes
-            if "".join(n.itertext()).strip()
-        ]
+        names = []
+        others = ""
+        for n in nodes:
+            text = clean_text("".join(n.itertext()))
+            if not text:
+                continue
+            if text.lower() in others_markers:
+                others = text
+                continue
+            # Übersetzer kennzeichnen, außer die Daten sagen es schon im Text
+            if n.get("role") == "translator" and not text.startswith("Übersetzt"):
+                text += " (Übers.)"
+            names.append(text)
+
         if not names:
-            return ""
+            return others
+        if others:
+            return f"{', '.join(names)} {others}"
         if len(names) == 1:
             return names[0]
-        if len(names) == 2:
-            return f"{names[0]} and {names[1]}"
-        return f"{', '.join(names[:-1])}, und {names[-1]}"
+        return f"{', '.join(names[:-1])} und {names[-1]}"
 
-    authors = join_names(bibl.xpath(".//tei:author", namespaces=NSMAP))
+    # role="translator_monogr": Übersetzer*innen des Sammelwerks/Buches (nicht des
+    # Beitrags). Sie stehen nie bei den Autor*innen, sondern nach dem Titel (level m).
+    authors = join_names(
+        bibl.xpath(".//tei:author[not(@role='translator_monogr')]", namespaces=NSMAP)
+    )
     editors = join_names(bibl.xpath(".//tei:editor", namespaces=NSMAP))
+    translators_m = join_names(
+        bibl.xpath(".//tei:author[@role='translator_monogr']", namespaces=NSMAP)
+    )
+    if translators_m:
+        translators_m = f"Übers. v. {translators_m}."
 
     title_a = bibl.xpath(".//tei:title[@level='a']", namespaces=NSMAP)
     title_m = bibl.xpath(
@@ -140,13 +162,33 @@ def generate_quote(bibl: ET.Element) -> str:
 
     # CHAPTER IN EDITED BOOK
     elif title_a and title_m:
-        if authors:
-            citation += f"{authors}. "
+        # Autor*innen des Beitrags (alles außer role="monogr") stehen vorne,
+        # Autor*innen des Sammelwerks (role="monogr") nach "In: " vor dem Titel.
+        authors_a = join_names(
+            bibl.xpath(
+                ".//tei:author[not(@role='monogr') and not(@role='translator_monogr')]",
+                namespaces=NSMAP,
+            )
+        )
+        authors_m = join_names(
+            bibl.xpath(".//tei:author[@role='monogr']", namespaces=NSMAP)
+        )
 
-        citation += f'"{title_a}." In: {title_full}.'
+        if authors_a:
+            citation += f"{authors_a}. "
+
+        citation += f'"{title_a}." In: '
+
+        if authors_m:
+            citation += f"{authors_m}: "
+
+        citation += f"{title_full}."
 
         if editors:
             citation += f" Hrsg. v. {editors}."
+
+        if translators_m:
+            citation += f" {translators_m}"
 
         pub = ""
 
@@ -170,9 +212,12 @@ def generate_quote(bibl: ET.Element) -> str:
         if authors:
             citation += f"{authors}. "
         elif editors:
-            citation += f"{editors}, ed. "
+            citation += f"{editors} (Hrsg.). "
 
         citation += f"{title_full}."
+
+        if translators_m:
+            citation += f" {translators_m}"
 
         if title_s:
             citation += f" {title_s}."
