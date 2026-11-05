@@ -33,7 +33,9 @@
                                         <xsl:value-of select="string-join(.//text())"/>
                                     </xsl:otherwise>
                                 </xsl:choose>
-
+                                <xsl:if test="@role=('translator', 'translator_monogr')">
+                                    <xsl:text> (Übers.)</xsl:text>
+                                </xsl:if>
                             </dd>
                         </xsl:for-each>
                     </xsl:if>
@@ -42,33 +44,63 @@
                     <xsl:if test="./tei:title[@level='a']">
                         <dt>Titel</dt>
                         <dd>
-                            <xsl:value-of select="./tei:title[@level='a']"/>
+                            <xsl:value-of select="./tei:title[@level='a'][not(@type='subtitle')]"/>
                             <xsl:if test="./tei:title[@level='a' and @type='subtitle']"><xsl:text>. </xsl:text>
                                 <xsl:value-of select="./tei:title[@level='a' and @type='subtitle']"/>
                             </xsl:if>
                         </dd>
                         
                         <dt>Erschienen in</dt>
-                        <dd>
-                            <xsl:if test="./tei:title[@level='j']">
-                                <xsl:value-of select="./tei:title[@level='j']"/>
-                            </xsl:if>
-                            <xsl:if test="./tei:title[@level='m']">
-                                <xsl:value-of select="./tei:title[@level='m']"/>
-                            </xsl:if>
-                        </dd>
+                        <!-- Zeitschrift (j) und Sammelband/Heft (m) je in einem eigenen dd;
+                             Titelzusätze (Untertitel, Band, ...) mit ". " angehängt -->
+                        <xsl:if test="./tei:title[@level='j']">
+                            <dd>
+                                <xsl:value-of select="./tei:title[@level='j'][not(@type)]"/>
+                                <xsl:for-each select="./tei:title[@level='j'][@type]">
+                                    <xsl:text>. </xsl:text>
+                                    <xsl:value-of select="."/>
+                                </xsl:for-each>
+                            </dd>
+                        </xsl:if>
+                        <xsl:if test="./tei:title[@level='m']">
+                            <dd>
+                                <xsl:value-of select="./tei:title[@level='m'][not(@type)]"/>
+                                <xsl:for-each select="./tei:title[@level='m'][@type]">
+                                    <xsl:text>. </xsl:text>
+                                    <xsl:value-of select="."/>
+                                </xsl:for-each>
+                            </dd>
+                        </xsl:if>
                     </xsl:if>
 
                     <xsl:if test="not(./tei:title[@level='a']) and ./tei:title[@level='m']">
                         <dt>Titel</dt>
                         <dd>
-                            <xsl:value-of select="./tei:title[@level='m']"/>
+                            <xsl:value-of select="./tei:title[@level='m'][not(@type='subtitle')]"/>
                             <xsl:if test="./tei:title[@level='m' and @type='subtitle']"><xsl:text>. </xsl:text>
                                 <xsl:value-of select="./tei:title[@level='m' and @type='subtitle']"/>
                             </xsl:if>
                         </dd>
                     </xsl:if>
-                    
+
+                    <xsl:if test="./tei:editor">
+                        <dt>Herausgeber*innen</dt>
+                        <xsl:for-each select="./tei:editor">
+                            <dd>
+                                <xsl:choose>
+                                    <xsl:when test="@key">
+                                        <a href="{replace(@key, '#', '')||'.html'}">
+                                            <xsl:value-of select="string-join(.//text())"/>
+                                        </a>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:value-of select="string-join(.//text())"/>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </dd>
+                        </xsl:for-each>
+                    </xsl:if>
+
 
                     <xsl:if test="./tei:num[@type='volume'] or ./tei:num[not(@type)]">
                         <dt>Nummer</dt>
