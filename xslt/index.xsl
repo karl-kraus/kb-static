@@ -44,7 +44,7 @@
                                   <br/>Sigurd Paul Scheichls 
                                   <br/><span class="fst-italic">Kommentierter Auswahlbibliographie zu Karl Kraus</span> (KAB, 1975ff.)
                               </p>
-                              <p class="lead">Herausgegeben von Bernhard Oberreither und Peter Andorfer</p>
+                              <p class="lead">Unter Mitarbeit von Patrick J. Klug herausgegeben von Bernhard Oberreither und Peter Andorfer</p>
                               <div class="d-grid gap-2 d-md-flex justify-content-md-start">
                                   <a href="about.html" type="button" class="btn btn-outline-primary btn-lg px-4 me-md-2">Über das Projekt</a>
                                   <a href="listbibl.html" type="button" class="btn btn-outline-primary btn-lg px-4">Alle Einträge</a>
