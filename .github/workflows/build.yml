@@ -5,11 +5,10 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
   schedule:
-  - cron: "59 12 * * *"
+    - cron: "59 12 * * *"
   push:
     branches:
       - main
-  
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -25,12 +24,12 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
-  deploy:
+  build:
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    outputs:
+      artifact_name: github-pages-${{ github.run_attempt }}
     env:
       ANT_OPTS: -Xmx6g
       TYPESENSE_HOST: typesense.acdh.oeaw.ac.at
@@ -44,7 +43,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
       - name: Install the latest version of uv
-        uses: astral-sh/setup-uv@v8.3.0 
+        uses: astral-sh/setup-uv@v10.4.0
       - name: Fetch the data
         run: ./shellscripts/fetch_data.sh
       - name: process the data
@@ -52,9 +51,9 @@ jobs:
       - name: Build the app
         run: ant
       - name: Build search index
-        run : uv run pyscripts/make_ts_index.py
+        run: uv run pyscripts/make_ts_index.py
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 25
       - name: Install node packages
@@ -67,7 +66,18 @@ jobs:
         uses: actions/upload-pages-artifact@v5
         with:
           # Upload entire repository
-          path: './html'
+          path: "./html"
+          name: github-pages-${{ github.run_attempt }}
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+        with:
+          artifact_name: ${{ needs.build.outputs.artifact_name }}
